@@ -8,10 +8,10 @@ package com.example.work_flowapplication
 //  data class Profile(val title: String = "Profile") : Screens(title)
 //}
 sealed class Screens(val route: String) {
-  object Home : Screens("home")
-  object Requests : Screens("requests")
-  object Dashboard : Screens("dashboard")
-  object Report : Screens("report")
-  object Profile : Screens("profile")
+  object Home : Screens("Home")
+  object Requests : Screens("Requests")
+  object Dashboard : Screens("Dashboard")
+  object Report : Screens("Report")
+  object Profile : Screens("Profile")
 }
 

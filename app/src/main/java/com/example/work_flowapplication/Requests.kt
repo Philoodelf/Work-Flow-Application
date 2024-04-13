@@ -12,6 +12,8 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun Request() {
+    var title =""
+    title = Screens.Requests.route.toString()
     Box(modifier = Modifier.fillMaxSize()){
         Column(modifier = Modifier
             .fillMaxSize()
@@ -20,7 +22,8 @@ fun Request() {
             horizontalAlignment = Alignment.CenterHorizontally
 
         ) {
-           // Text(text = "Requests", fontSize = 30.sp)
+            Text(text = title, fontSize = 30.sp)
+
         }
     }
 }

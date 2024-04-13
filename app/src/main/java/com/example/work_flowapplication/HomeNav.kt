@@ -42,6 +42,7 @@ import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -60,6 +61,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.work_flowapplication.ui.theme.WorkFlowApplicationTheme
 import com.example.work_flowapplication.ui.theme.blue
@@ -99,17 +101,33 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun buttonnav() {
  val navigationController = rememberNavController()
+    var title=""
     val context = LocalContext.current.applicationContext
     val selected = remember {
         mutableStateOf(Icons.Default.Home)
     }
     Scaffold(
         topBar = {
+
+
+            val navBackStackEntry by navigationController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.destination?.route
+            val title = remember { mutableStateOf("Home") }
+
+            when (currentRoute) {
+                Screens.Home.route -> title.value = "Home"
+                Screens.Requests.route -> title.value = "Requests"
+                Screens.Dashboard.route -> title.value = "Dashboard"
+                Screens.Report.route -> title.value = "Report"
+                Screens.Profile.route -> title.value = "Profile"
+                else -> title.value = "Home" // Default title
+            }
+
             TopAppBar(
                 title = {
                     Box(modifier = Modifier.fillMaxWidth(),
                         Alignment.Center){
-                        Text(text = "Home",textAlign = TextAlign.Center, color = Color.White ,
+                        Text(text = title.value,textAlign = TextAlign.Center, color = Color.White ,
                             fontWeight = FontWeight.Bold, fontFamily = FontFamily.Default
                         )
                     }
@@ -242,162 +260,7 @@ fun buttonnav() {
 
 
 
-        // card + calendar
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.White)
-                .padding(vertical = 64.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            HorizontalCalendarView(
-                modifier = Modifier.border(1.dp, Color.Gray, shape = RoundedCornerShape(16.dp)),
-                selectedTextColor = Color.White,
-                unSelectedTextColor = Color.Black,
-                selectedCardColor = Color(0xFF029DF0),
-                unSelectedCardColor = Color.White,
-                onDayClick = { day ->
-                    Toast.makeText(context, day.toString(), Toast.LENGTH_SHORT).show()
-                })
-            //big card
-            ElevatedCard(
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 6.dp
-                ),
-                modifier = Modifier
-                    .size(width = 350.dp, height = 620.dp)
-                    .padding(vertical = 4.dp)
-                , shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(Color.White)
 
-
-                ) {
-                Text(
-                    text = "Today Attendance",
-                    fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier
-                        .padding(16.dp),
-                    textAlign = TextAlign.Center,
-                )
-
-
-
-
-                Column(
-                    modifier = Modifier.padding(16.dp), // Apply padding to the entire column
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        //inner cards
-                        //small card
-                        ElevatedCard(elevation = CardDefaults.cardElevation(
-                            defaultElevation = 6.dp
-                        ),
-                            modifier = Modifier.size(width = 160.dp, height = 120.dp)
-                                .padding(12.dp).clickable { Toast.makeText(context, "present 23", Toast.LENGTH_SHORT).show() },
-                            colors = CardDefaults.cardColors(Color(0xFFE0EBF4))
-                        ) {
-                            Column {
-                                Text("Present", fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
-                                Text("23", fontSize = 25.sp, color = Color(0xFF45A6F5))
-                        }
-
-                        }
-                        //second
-                        ElevatedCard(elevation = CardDefaults.cardElevation(
-                            defaultElevation = 6.dp
-                        ),
-                            modifier = Modifier.size(width = 160.dp, height = 120.dp)
-                                .padding(12.dp).clickable { Toast.makeText(context, "Late in 23", Toast.LENGTH_SHORT).show() },
-                            colors = CardDefaults.cardColors(Color(0xFFF5EBD7))
-                        ) {
-
-                            Column {
-                                Text("Late In",fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
-                                Text("23",fontSize = 25.sp, color = Color(0xFFF09E07))
-                            }
-                        }
-                    }
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-
-                        //third
-                        ElevatedCard(elevation = CardDefaults.cardElevation(
-                            defaultElevation = 6.dp
-                        ),
-                            modifier = Modifier.size(width = 160.dp, height = 120.dp)
-                                .padding(12.dp).clickable { Toast.makeText(context, "early leave 23", Toast.LENGTH_SHORT).show() },
-                            colors = CardDefaults.cardColors(Color(0xFFA7D5C9))
-                        ) {
-
-                            Column {
-                                Text("Early Leave",fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
-                                Text("23",fontSize = 25.sp, color = Color(0xFF05B279))
-                            }
-                        }
-                            //fourth
-
-                        ElevatedCard(elevation = CardDefaults.cardElevation(
-                            defaultElevation = 6.dp
-                        ),
-                            modifier = Modifier.size(width = 160.dp, height = 120.dp)
-                                .padding(12.dp).clickable { Toast.makeText(context, "Absents 23", Toast.LENGTH_SHORT).show() },
-                            colors = CardDefaults.cardColors(Color(0xFFED9BA4))
-                        ) {
-
-                            Column {
-                                Text("Absents",fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
-                                Text("23",fontSize = 25.sp, color = Color(0xFFF75262))
-                            }
-                        }
-
-                    }
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        //fifth
-                        ElevatedCard(elevation = CardDefaults.cardElevation(
-                            defaultElevation = 6.dp
-                        ),
-                            modifier = Modifier.size(width = 160.dp, height = 120.dp)
-                                .padding(12.dp).clickable { Toast.makeText(context, "Vacation 23", Toast.LENGTH_SHORT).show() },
-                            colors = CardDefaults.cardColors(Color(0xFFE5E5F5))
-                        ) {
-
-                            Column {
-                                Text("Vacation",fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
-                                Text("23",fontSize = 25.sp, color = Color(0xFFAEAEE0))
-                            }
-                        }
-                            //sixth
-                        ElevatedCard(elevation = CardDefaults.cardElevation(
-                            defaultElevation = 6.dp
-                        ),
-                            modifier = Modifier.size(width = 160.dp, height = 120.dp)
-                                .padding(12.dp).clickable { Toast.makeText(context, "Deadline 23", Toast.LENGTH_SHORT).show() },
-                            colors = CardDefaults.cardColors(Color(0xFFF6E5DE))
-                        ) {
-
-                            Column {
-                                Text("Deadline Task",fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
-                                Text("23",fontSize = 25.sp, color = Color(0xFFE6B6A2))
-                            }
-                        }
-
-                    }
-
-                }
-            }
-
-        }
 
 }
 }
