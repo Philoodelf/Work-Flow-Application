@@ -5,6 +5,7 @@ import android.text.style.BackgroundColorSpan
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -50,8 +51,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -192,8 +195,9 @@ fun buttonnav() {
                 modifier = Modifier.weight(1f)
             ) {
                // Icon(imageVector = R.drawable., contentDescription =null )
-                Icon( Icons.Default.Star , contentDescription = null, modifier = Modifier.size(32.dp),
-                    tint = if(selected.value== Icons.Default.Star) Color.White else Color(0xFF016DA8))
+                Image(
+                    painter = painterResource(id = R.drawable.requests), contentDescription = null, modifier = Modifier.size(32.dp),
+                   colorFilter = ColorFilter.tint( if(selected.value== Icons.Default.Star) Color.White else Color(0xFF016DA8)))
                 Text(text = "Request", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
 
             }
@@ -206,8 +210,9 @@ fun buttonnav() {
             },
                 modifier = Modifier.weight(1f)
             ) {
-                Icon( Icons.Default.DateRange , contentDescription = null, modifier = Modifier.size(32.dp),
-                    tint = if(selected.value== Icons.Default.DateRange) Color.White else Color(0xFF016DA8))
+                Image(
+                    painter = painterResource(id = R.drawable.dashboard), contentDescription = null, modifier = Modifier.size(32.dp),
+                    colorFilter = ColorFilter.tint(if(selected.value== Icons.Default.DateRange) Color.White else Color(0xFF016DA8)))
                 Text(text = "Dashboard", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
 
 
@@ -221,8 +226,9 @@ fun buttonnav() {
             },
                 modifier = Modifier.weight(1f)
             ) {
-                Icon( Icons.Default.Warning , contentDescription = null, modifier = Modifier.size(32.dp),
-                    tint = if(selected.value== Icons.Default.Warning) Color.White else Color(0xFF016DA8))
+                Image(
+                    painter = painterResource(id = R.drawable.report), contentDescription = null, modifier = Modifier.size(32.dp),
+                    colorFilter = ColorFilter.tint(if(selected.value== Icons.Default.Warning) Color.White else Color(0xFF016DA8)))
                 Text(text = "Report", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
 
 
@@ -237,8 +243,10 @@ fun buttonnav() {
                 modifier = Modifier.weight(1f)
             ) {
 
-                Icon( Icons.Default.AccountCircle , contentDescription = null, modifier = Modifier.size(32.dp),
-                    tint = if(selected.value== Icons.Default.AccountCircle) Color.White else Color(0xFF016DA8))
+               // Icon( Icons.Default.AccountCircle ,
+                Image(
+                    painter = painterResource(id = R.drawable.profile), contentDescription = null, modifier = Modifier.size(32.dp),
+                    colorFilter = ColorFilter.tint(if(selected.value== Icons.Default.AccountCircle) Color.White else Color(0xFF016DA8)))
                 Text(text = "Profile", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
 
 
