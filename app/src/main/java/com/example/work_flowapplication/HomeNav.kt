@@ -5,12 +5,14 @@ import android.text.style.BackgroundColorSpan
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+//import androidx.compose.foundation.layout.ColumnScopeInstance.weight
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,11 +31,17 @@ import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -41,16 +49,22 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.contentColorFor
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -60,10 +74,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.work_flowapplication.ui.theme.WorkFlowApplicationTheme
 import com.example.work_flowapplication.ui.theme.blue
+import com.example.work_flowapplication.ui.theme.ll
 import com.joelkanyi.horizontalcalendar.HorizontalCalendarView
+import kotlinx.coroutines.launch
 
 class HomeNav : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,18 +115,42 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun buttonnav() {
+    val scope = rememberCoroutineScope()
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
  val navigationController = rememberNavController()
+    var title=""
     val context = LocalContext.current.applicationContext
-    val selected = remember {
-        mutableStateOf(Icons.Default.Home)
+//    val selected = remember {
+//        mutableStateOf(Icons.Default.Home)
+//    }
+    var selected by remember {
+        mutableStateOf("home")
     }
     Scaffold(
+
         topBar = {
+
+
+            val navBackStackEntry by navigationController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.destination?.route
+            val title = remember { mutableStateOf("Home") }
+
+            when (currentRoute) {
+                Screens.Home.route -> title.value = "Home"
+                Screens.Requests.route -> title.value = "Requests"
+                Screens.Dashboard.route -> title.value = "Dashboard"
+                Screens.Report.route -> title.value = "Report"
+                Screens.Profile.route -> title.value = "Profile"
+                Screens.SendAlert.route -> title.value = "Send Alert"
+                Screens.Search.route -> title.value = "Search"
+                else -> title.value = "Home" // Default title
+            }
+
             TopAppBar(
                 title = {
                     Box(modifier = Modifier.fillMaxWidth(),
                         Alignment.Center){
-                        Text(text = "Home",textAlign = TextAlign.Center, color = Color.White ,
+                        Text(text = title.value,textAlign = TextAlign.Center, color = Color.White ,
                             fontWeight = FontWeight.Bold, fontFamily = FontFamily.Default
                         )
                     }
@@ -119,296 +160,364 @@ fun buttonnav() {
                    .clip(shape = RoundedCornerShape(16.dp))
                    .shadow(elevation = 8.dp)
                    .fillMaxWidth(),
+
                   // .background(color = Color(0xFF029DF0)) ,
                 navigationIcon = {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        
-                    }
+                    //menu
 
-                    Icon(imageVector = Icons.Default.Menu, contentDescription = "Icon", tint = Color.White,
-                        modifier = Modifier.size(40.dp)
+                    IconButton(onClick = {
+                       scope.launch {
+                            drawerState.open()
+                        }
+                       // drawer()
+                    }) {
+                        Icon(imageVector = Icons.Default.Menu, contentDescription = "Icon", tint = Color.White,
+                            modifier = Modifier.size(40.dp)
                         )
-                }, colors = TopAppBarDefaults.mediumTopAppBarColors(Color(0xFF029DF0),
+                   }
+
+               },
+
+                colors = TopAppBarDefaults.mediumTopAppBarColors(Color(0xFF029DF0),
                     contentColorFor(backgroundColor = Color(0xFFFFFFFF))
                     ),
+                //notification
                 actions = {
                     IconButton(onClick = { /*TODO*/ }) {
+                        Icon(imageVector = Icons.Default.Notifications, contentDescription =null
+                            ,tint = Color.White
+                            , modifier = Modifier.size(32.dp)
+                        )
                     }
-                    Icon(imageVector = Icons.Default.Notifications, contentDescription =null
-                        ,tint = Color.White
-                    , modifier = Modifier.size(32.dp)
-                    )
+
 
                 }
 
                 )
         },
 
-        bottomBar ={
-        BottomAppBar(containerColor = Color(0xFF029DF0), modifier = Modifier
-            .padding(horizontal = 5.dp)
-            .clip(shape = RoundedCornerShape(16.dp))
-        ){
-            // Home
-            IconButton(onClick = {
-                selected.value=Icons.Default.Home
-                navigationController.navigate(Screens.Home.route){
-                    popUpTo(0)
-                }
-            },
-                modifier = Modifier
-                    .weight(1f)
-                ) {
-                Icon( Icons.Default.Home , contentDescription = null, modifier = Modifier.size(32.dp),
+//        bottomBar ={
+//        BottomAppBar(containerColor = Color(0xFF029DF0), modifier = Modifier
+//            .padding(horizontal = 5.dp)
+//            .clip(shape = RoundedCornerShape(16.dp)),
+//
+//        ){
+//        bottomBar = {
+//
+//            NavigationBar(containerColor = Color.White) {
+//                val iconcolour=Color(0xFF1E7DFF)
+//
+//
+//
+//                    }
+//            // Home
+//            IconButton(onClick = {
+//                selected.value=Icons.Default.Home
+//                navigationController.navigate(Screens.Home.route){
+//                    popUpTo(0)
+//                }
+//            },
+//                modifier = Modifier
+//                 //   .weight(1f)
+//                ) {
+//                Icon( Icons.Default.Home , contentDescription = null, modifier = Modifier.size(32.dp),
+//
+//                   tint = if(selected.value== Icons.Default.Home) Color.White else Color(0xFF016DA8))
+//                    Text(text = "Home", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
+//            }
+//                //Requests
+//            IconButton(onClick = {
+//                selected.value=Icons.Default.Star
+//                navigationController.navigate(Screens.Requests.route){
+//                    popUpTo(0)
+//                }
+//            },
+//           //     modifier = Modifier.weight(1f)
+//            ) {
+//               // Icon(imageVector = R.drawable., contentDescription =null )
+//                Image(
+//                    painter = painterResource(id = R.drawable.requests), contentDescription = null, modifier = Modifier.size(32.dp),
+//                   colorFilter = ColorFilter.tint( if(selected.value== Icons.Default.Star) Color.White else Color(0xFF016DA8)))
+//                Text(text = "Request", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
+//
+//            }
+//               //Dashboard
+//            IconButton(onClick = {
+//                selected.value=Icons.Default.DateRange
+//                navigationController.navigate(Screens.Dashboard.route){
+//                    popUpTo(0)
+//                }
+//            },
+//              //  modifier = Modifier.weight(1f)
+//            ) {
+//                Image(
+//                    painter = painterResource(id = R.drawable.dashboard), contentDescription = null, modifier = Modifier.size(32.dp),
+//                    colorFilter = ColorFilter.tint(if(selected.value== Icons.Default.DateRange) Color.White else Color(0xFF016DA8)))
+//                Text(text = "Dashboard", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
+//
+//
+//            }
+//            //Report
+//            IconButton(onClick = {
+//                selected.value=Icons.Default.Warning
+//                navigationController.navigate(Screens.Report.route){
+//                    popUpTo(0)
+//                }
+//            },
+//              //  modifier = Modifier.weight(1f)
+//            ) {
+//                Image(
+//                    painter = painterResource(id = R.drawable.report), contentDescription = null, modifier = Modifier.size(32.dp),
+//                    colorFilter = ColorFilter.tint(if(selected.value== Icons.Default.Warning) Color.White else Color(0xFF016DA8)))
+//                Text(text = "Report", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
+//
+//
+//            }
+//            // profile
+//            IconButton(onClick = {
+//                selected.value=Icons.Default.AccountCircle
+//                navigationController.navigate(Screens.Profile.route){
+//                    popUpTo(0)
+//                }
+//            },
+//              //  modifier = Modifier.weight(1f)
+//            ) {
+//
+//               // Icon( Icons.Default.AccountCircle ,
+//                Image(
+//                    painter = painterResource(id = R.drawable.profile), contentDescription = null, modifier = Modifier.size(32.dp),
+//                    colorFilter = ColorFilter.tint(if(selected.value== Icons.Default.AccountCircle) Color.White else Color(0xFF016DA8)))
+//                Text(text = "Profile", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
+//
+//
+//            }
+//
+//
+//
+//
+//    } ) {
 
-                   tint = if(selected.value== Icons.Default.Home) Color.White else Color(0xFF016DA8))
-                    Text(text = "Home", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
-            }
-                //Requests
-            IconButton(onClick = {
-                selected.value=Icons.Default.Star
-                navigationController.navigate(Screens.Requests.route){
-                    popUpTo(0)
-                }
-            },
-                modifier = Modifier.weight(1f)
-            ) {
-               // Icon(imageVector = R.drawable., contentDescription =null )
-                Icon( Icons.Default.Star , contentDescription = null, modifier = Modifier.size(32.dp),
-                    tint = if(selected.value== Icons.Default.Star) Color.White else Color(0xFF016DA8))
-                Text(text = "Request", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
+        bottomBar = {
 
-            }
-               //Dashboard
-            IconButton(onClick = {
-                selected.value=Icons.Default.DateRange
-                navigationController.navigate(Screens.Dashboard.route){
-                    popUpTo(0)
-                }
-            },
-                modifier = Modifier.weight(1f)
-            ) {
-                Icon( Icons.Default.DateRange , contentDescription = null, modifier = Modifier.size(32.dp),
-                    tint = if(selected.value== Icons.Default.DateRange) Color.White else Color(0xFF016DA8))
-                Text(text = "Dashboard", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
+            NavigationBar(containerColor = Color.White) {
+                val iconcolour = Color(0xFF1E7DFF)
 
+                NavigationBarItem(selected = selected == "home",
+                    onClick = {
+                        selected = "home"
+                        navigationController.navigate(Screens.Home.route) {
 
-            }
-            //Report
-            IconButton(onClick = {
-                selected.value=Icons.Default.Warning
-                navigationController.navigate(Screens.Report.route){
-                    popUpTo(0)
-                }
-            },
-                modifier = Modifier.weight(1f)
-            ) {
-                Icon( Icons.Default.Warning , contentDescription = null, modifier = Modifier.size(32.dp),
-                    tint = if(selected.value== Icons.Default.Warning) Color.White else Color(0xFF016DA8))
-                Text(text = "Report", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
-
-
-            }
-            // profile
-            IconButton(onClick = {
-                selected.value=Icons.Default.AccountCircle
-                navigationController.navigate(Screens.Profile.route){
-                    popUpTo(0)
-                }
-            },
-                modifier = Modifier.weight(1f)
-            ) {
-
-                Icon( Icons.Default.AccountCircle , contentDescription = null, modifier = Modifier.size(32.dp),
-                    tint = if(selected.value== Icons.Default.AccountCircle) Color.White else Color(0xFF016DA8))
-                Text(text = "Profile", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
-
-
-            }
-
-
-
-        }
-    } ) {paddingValues ->
-    NavHost(navController = navigationController,
-        startDestination = Screens.Home.route,
-        modifier = Modifier.padding(paddingValues)){
-        composable(Screens.Home.route){ Home()}
-        composable(Screens.Requests.route){ Request() }
-        composable(Screens.Dashboard.route){ Dashboard() }
-        composable(Screens.Report.route){ Report() }
-        composable(Screens.Profile.route){ Profile() }
-    }
-
-
-
-        // card + calendar
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.White)
-                .padding(vertical = 64.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            HorizontalCalendarView(
-                modifier = Modifier.border(1.dp, Color.Gray, shape = RoundedCornerShape(16.dp)),
-                selectedTextColor = Color.White,
-                unSelectedTextColor = Color.Black,
-                selectedCardColor = Color(0xFF029DF0),
-                unSelectedCardColor = Color.White,
-                onDayClick = { day ->
-                    Toast.makeText(context, day.toString(), Toast.LENGTH_SHORT).show()
-                })
-            //big card
-            ElevatedCard(
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 6.dp
-                ),
-                modifier = Modifier
-                    .size(width = 350.dp, height = 620.dp)
-                    .padding(vertical = 4.dp)
-                , shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(Color.White)
+                        }
+                    },
+                    icon = {
 
 
-                ) {
-                Text(
-                    text = "Today Attendance",
-                    fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier
-                        .padding(16.dp),
-                    textAlign = TextAlign.Center,
+                        /*if (selected == "home") {
+                            Box(
+                                modifier = Modifier
+                                    .width(48.dp)
+                                     // Align to top
+
+                            ) {
+                            Divider(
+                                color = red,
+                                thickness = 8.dp,
+                                modifier = Modifier.width(50.dp)
+                                    .clip( shape = RoundedCornerShape(bottomEnd = 10.dp, bottomStart = 10.dp))
+                                // Align to bottom
+                            )}
+                        }*/
+
+                        Icon(
+                            painter = painterResource(R.drawable.home_logo),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .size(25.dp),
+                            tint = if (selected == "home") Color(0xFF1E7DFF) else ll
+                        )
+
+
+                    }, colors = androidx.compose.material3.NavigationBarItemDefaults.colors(
+
+                        indicatorColor = Color.White
+                    ), label = {
+                        Text(
+                            text = "Home",
+                            color = if (selected == "home") iconcolour else ll
+                        )
+                    }
+
+
                 )
-
-
-
-
-                Column(
-                    modifier = Modifier.padding(16.dp), // Apply padding to the entire column
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        //inner cards
-                        //small card
-                        ElevatedCard(elevation = CardDefaults.cardElevation(
-                            defaultElevation = 6.dp
-                        ),
-                            modifier = Modifier.size(width = 160.dp, height = 120.dp)
-                                .padding(12.dp).clickable { Toast.makeText(context, "present 23", Toast.LENGTH_SHORT).show() },
-                            colors = CardDefaults.cardColors(Color(0xFFE0EBF4))
-                        ) {
-                            Column {
-                                Text("Present", fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
-                                Text("23", fontSize = 25.sp, color = Color(0xFF45A6F5))
+                NavigationBarItem(selected = selected == "request",
+                    onClick = {
+                        selected = "request"
+                        navigationController.navigate(Screens.Requests.route) {
+                            popUpTo(0)
                         }
 
-                        }
-                        //second
-                        ElevatedCard(elevation = CardDefaults.cardElevation(
-                            defaultElevation = 6.dp
-                        ),
-                            modifier = Modifier.size(width = 160.dp, height = 120.dp)
-                                .padding(12.dp).clickable { Toast.makeText(context, "Late in 23", Toast.LENGTH_SHORT).show() },
-                            colors = CardDefaults.cardColors(Color(0xFFF5EBD7))
-                        ) {
+                    },
+                    icon = {
+                        Icon(
+                            painter = painterResource(R.drawable.requests),
+                            contentDescription = "",
+                            modifier = Modifier.size(25.dp),
 
-                            Column {
-                                Text("Late In",fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
-                                Text("23",fontSize = 25.sp, color = Color(0xFFF09E07))
-                            }
-                        }
-                    }
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
 
-                        //third
-                        ElevatedCard(elevation = CardDefaults.cardElevation(
-                            defaultElevation = 6.dp
-                        ),
-                            modifier = Modifier.size(width = 160.dp, height = 120.dp)
-                                .padding(12.dp).clickable { Toast.makeText(context, "early leave 23", Toast.LENGTH_SHORT).show() },
-                            colors = CardDefaults.cardColors(Color(0xFFA7D5C9))
-                        ) {
+                            tint = if (selected == "request") iconcolour else ll
+                        )
+                    }, colors = androidx.compose.material3.NavigationBarItemDefaults.colors(
 
-                            Column {
-                                Text("Early Leave",fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
-                                Text("23",fontSize = 25.sp, color = Color(0xFF05B279))
-                            }
-                        }
-                            //fourth
+                        indicatorColor = Color.White
+                    ),
 
-                        ElevatedCard(elevation = CardDefaults.cardElevation(
-                            defaultElevation = 6.dp
-                        ),
-                            modifier = Modifier.size(width = 160.dp, height = 120.dp)
-                                .padding(12.dp).clickable { Toast.makeText(context, "Absents 23", Toast.LENGTH_SHORT).show() },
-                            colors = CardDefaults.cardColors(Color(0xFFED9BA4))
-                        ) {
+                    label = {
+                        Text(
+                            text = "Request",
+                            color = if (selected == "request") iconcolour else ll
+                        )
+                    })
 
-                            Column {
-                                Text("Absents",fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
-                                Text("23",fontSize = 25.sp, color = Color(0xFFF75262))
-                            }
+
+                NavigationBarItem(selected = selected == "Dashboard",
+                    onClick = {
+                        selected = "Dashboard"
+                        navigationController.navigate(Screens.Dashboard.route) {
+                            popUpTo(0)
                         }
 
-                    }
+                    },
+                    icon = {
+                        Icon(
+                            painter = painterResource(R.drawable.dashboard),
+                            contentDescription = "",
+                            modifier = Modifier.size(25.dp),
+                            tint = if (selected == "Task") iconcolour else ll
+                        )
+                    }, colors = androidx.compose.material3.NavigationBarItemDefaults.colors(
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        //fifth
-                        ElevatedCard(elevation = CardDefaults.cardElevation(
-                            defaultElevation = 6.dp
-                        ),
-                            modifier = Modifier.size(width = 160.dp, height = 120.dp)
-                                .padding(12.dp).clickable { Toast.makeText(context, "Vacation 23", Toast.LENGTH_SHORT).show() },
-                            colors = CardDefaults.cardColors(Color(0xFFE5E5F5))
-                        ) {
+                        indicatorColor = Color.White
+                    ), label = {
+                        Text(
+                            text = "Dashboard",
+                            color = if (selected == "Dashboard") iconcolour else ll
+                        )
+                    })
 
-                            Column {
-                                Text("Vacation",fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
-                                Text("23",fontSize = 25.sp, color = Color(0xFFAEAEE0))
-                            }
+
+                NavigationBarItem(selected = selected == "Report",
+                    onClick = {
+
+
+                        selected = "Report"
+                        navigationController.navigate(Screens.Report.route) {
+                            popUpTo(0)
                         }
-                            //sixth
-                        ElevatedCard(elevation = CardDefaults.cardElevation(
-                            defaultElevation = 6.dp
-                        ),
-                            modifier = Modifier.size(width = 160.dp, height = 120.dp)
-                                .padding(12.dp).clickable { Toast.makeText(context, "Deadline 23", Toast.LENGTH_SHORT).show() },
-                            colors = CardDefaults.cardColors(Color(0xFFF6E5DE))
-                        ) {
+                    },
+                    icon = {
+                        Icon(
+                            painter = painterResource(R.drawable.report),
+                            contentDescription = "",
+                            modifier = Modifier.size(25.dp),
+                            tint = if (selected == "Report") iconcolour else ll
+                        )
+                    }, colors = androidx.compose.material3.NavigationBarItemDefaults.colors(
 
-                            Column {
-                                Text("Deadline Task",fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
-                                Text("23",fontSize = 25.sp, color = Color(0xFFE6B6A2))
-                            }
+                        indicatorColor = Color.White
+                    ), label = {
+                        Text(
+                            text = "Report",
+                            color = if (selected == "Report") iconcolour else ll
+                        )
+                    })
+
+
+                NavigationBarItem(selected = selected == "Profile",
+                    onClick = {
+                        selected = "Profile"
+                        navigationController.navigate(Screens.Profile.route) {
+                            popUpTo(0)
                         }
 
-                    }
+                    },
+                    icon = {
+                        Icon(
+                            painter = painterResource(R.drawable.profile),
+                            contentDescription = "",
+                            modifier = Modifier.size(25.dp),
+                            tint = if (selected == "Profile") iconcolour else ll
+                        )
+                    }, colors = androidx.compose.material3.NavigationBarItemDefaults.colors(
 
-                }
+                        indicatorColor = Color.White
+                    ), label = {
+                        Text(
+                            text = "Profile",
+                            color = if (selected == "Profile") iconcolour else ll
+                        )
+                    })
+
             }
-
         }
 
-}
-}
+    )
+    { paddingValues ->
+        NavHost(
+            navController = navigationController,
+            startDestination = Screens.Home.route,
+            modifier = Modifier.padding(paddingValues)
+        ) {
+            composable(Screens.Home.route) { Home() }
+            composable(Screens.Requests.route) { Request() }
+            composable(Screens.Dashboard.route) { Dashboard(navController = navigationController) }
+            composable(Screens.Report.route) { Report() }
+            composable(Screens.Profile.route) { Profile() }
+            composable(Screens.SendAlert.route) {
+                SendAlert(
+                    // navController = navigationController
+                    navController = navigationController
+                )
+            }
+            composable(Screens.Search.route) { Search(navController = navigationController) }
+        }
+    }}
 
 
-@Preview(showBackground = true)
+
+                @Preview(showBackground = true)
+                @Composable
+                fun GreetingPreview3() {
+                    WorkFlowApplicationTheme {
+                        Greeting("Android")
+                        buttonnav()
+
+                    }
+                }
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GreetingPreview3() {
-    WorkFlowApplicationTheme {
-        Greeting("Android")
-        buttonnav()
+fun drawer(drawerState: DrawerState) {
+
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+    ModalNavigationDrawer(drawerContent = {
+        ModalDrawerSheet {
+
+            Column {
+                Text(text = "Settings", Modifier.padding(16.dp))
+
+                Row {
+                    Text(text = "Logout", Modifier.padding(16.dp))
+                }
+                Row {
+                    Text(text = "Change Password", Modifier.padding(16.dp))
+                }
+            }
+        }
+    }, drawerState = drawerState) {
 
     }
 }
+
+
+
