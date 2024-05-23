@@ -13,5 +13,7 @@ sealed class Screens(val route: String) {
   object Dashboard : Screens("Dashboard")
   object Report : Screens("Report")
   object Profile : Screens("Profile")
+  object SendAlert : Screens("Send Alert")
+  object Search : Screens("Search")
 }
 

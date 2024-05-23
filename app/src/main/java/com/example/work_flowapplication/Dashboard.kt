@@ -40,9 +40,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun Dashboard() {
+fun Dashboard(
+    navController: NavController
+) {
+
 //    Box(modifier = Modifier.fillMaxSize()){
 //        Column(modifier = Modifier
 //            .fillMaxSize()
@@ -59,7 +64,7 @@ fun Dashboard() {
     Box(modifier = Modifier.padding(start = 9.dp, top = 9.dp)) {
         Piechart(
             data = mapOf(
-                Pair("Present ", 40),
+                Pair("Present ", 41),
                 Pair("Vacation ", 23),
                 Pair("Absent ", 35),
             )
@@ -117,7 +122,8 @@ fun Dashboard() {
                             .size(width = 140.dp, height = 120.dp)
                             .padding(8.dp)
                             .clickable {
-                                /*to do */
+                               // navController.navigate("SendAlert")
+                                navController.navigate(Screens.SendAlert.route)
                             },
                         colors = CardDefaults.cardColors(Color.White)
                     ) {
@@ -202,6 +208,7 @@ fun Dashboard() {
                             .padding(8.dp)
                             .clickable {
                                 /*to do */
+                                navController.navigate(Screens.Search.route)
                             },
                         colors = CardDefaults.cardColors(Color.White)
                     ) {

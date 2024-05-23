@@ -127,6 +127,7 @@ fun detailsPieChart(
 
 }
 
+
 @Composable
 fun detailsPieChartItems(
     data: Pair<String, Int>,
@@ -137,6 +138,7 @@ fun detailsPieChartItems(
             .padding(vertical = 5.dp, horizontal = 30.dp),
         color = Color.Transparent
     ) {
+        //the info
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -172,4 +174,85 @@ fun detailsPieChartItems(
 
     }
 
+}
+
+
+
+//piechart onlyyy
+@Composable
+fun Piechartonly(
+    data: Map<String, Int>,
+    radiusOuter: Dp = 90.dp,
+    CharBarWidth: Dp = 20.dp,
+    animDuration: Int = 1000,
+) {
+    val totalSum = data.values.sum()
+    val floatvalue = mutableListOf<Float>()
+
+    data.values.forEachIndexed { index, values ->
+        floatvalue.add(index, 360 * values.toFloat() / totalSum.toFloat())
+    }
+
+    val colors = listOf(
+        Color(0xFF956CE6),
+        Color(0xFFFFBF41),
+        Color(0xFFFF4948),
+        Color(0xFF0470BF),
+        Color(0xFFFDF001),
+        Color(0xFFE70013),
+        Color(0xFFFFFFFF),
+    )
+    var animationPlayed by remember { mutableStateOf(false) }
+
+    var lastValue = 0f
+
+    val animatesize by animateFloatAsState(
+        targetValue = if (animationPlayed) radiusOuter.value * 2f else 0f,
+        animationSpec = tween(
+            durationMillis = animDuration,
+            delayMillis = 0,
+            easing = LinearOutSlowInEasing
+        )
+    )
+
+    val animateRotation by animateFloatAsState(
+        targetValue = if (animationPlayed) 90f * 11f else 0f,
+        animationSpec = tween(
+            durationMillis = animDuration,
+            delayMillis = 0,
+            easing = LinearOutSlowInEasing
+        )
+    )
+
+    LaunchedEffect(key1 = true) {
+        animationPlayed = true
+    }
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier.size(animatesize.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Canvas(
+                modifier = Modifier
+                    .size(radiusOuter * 2f)
+                    .rotate(animateRotation)
+            ) {
+                var lastValue = 0f
+                floatvalue.forEachIndexed { index, value ->
+                    drawArc(
+                        color = colors[index],
+                        startAngle = lastValue,
+                        sweepAngle = value,
+                        useCenter = false,
+                        style = Stroke(CharBarWidth.toPx(), cap = StrokeCap.Butt)
+                    )
+                    lastValue += value
+                }
+            }
+        }
+    }
 }
