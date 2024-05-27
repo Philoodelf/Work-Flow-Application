@@ -50,6 +50,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -319,9 +320,9 @@ fun buttonnav(context1: AppCompatActivity) {
                     ), label = {
                         Text(
                             text = "Home",
-                            color = if (selected == "home") iconcolour else ll
+                            color = if (selected == "home") iconcolour else ll, fontSize = 10.sp
                         )
-                    }
+                    }, modifier = Modifier.weight(1f)
 
 
                 )
@@ -350,9 +351,9 @@ fun buttonnav(context1: AppCompatActivity) {
                     label = {
                         Text(
                             text = "Request",
-                            color = if (selected == "request") iconcolour else ll
+                            color = if (selected == "request") iconcolour else ll, fontSize = 10.sp
                         )
-                    })
+                    }, modifier = Modifier.weight(1f))
 
 
                 NavigationBarItem(selected = selected == "Dashboard",
@@ -376,9 +377,12 @@ fun buttonnav(context1: AppCompatActivity) {
                     ), label = {
                         Text(
                             text = "Dashboard",
-                            color = if (selected == "Dashboard") iconcolour else ll
+                            color = if (selected == "Dashboard") iconcolour else ll ,
+                             fontSize = 10.sp,
+                            maxLines = 1
+
                         )
-                    })
+                    }, modifier = Modifier.weight(1f))
 
 
                 NavigationBarItem(selected = selected == "Report",
@@ -403,9 +407,9 @@ fun buttonnav(context1: AppCompatActivity) {
                     ), label = {
                         Text(
                             text = "Report",
-                            color = if (selected == "Report") iconcolour else ll
+                            color = if (selected == "Report") iconcolour else ll, fontSize = 10.sp
                         )
-                    })
+                    }, modifier = Modifier.weight(1f))
 
 
                 NavigationBarItem(selected = selected == "Profile",
@@ -429,9 +433,9 @@ fun buttonnav(context1: AppCompatActivity) {
                     ), label = {
                         Text(
                             text = "Profile",
-                            color = if (selected == "Profile") iconcolour else ll
+                            color = if (selected == "Profile") iconcolour else ll, fontSize = 10.sp
                         )
-                    })
+                    }, modifier = Modifier.weight(1f))
 
             }
         }
