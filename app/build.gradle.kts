@@ -50,6 +50,8 @@ android {
 }
 
 dependencies {
+    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     val nav_version = "2.7.7"
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
@@ -59,14 +61,21 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation ("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+    implementation("androidx.core:core-splashscreen:1.0.0")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation ("com.github.JoelKanyi:HorizontalCalendarView:1.0.4")
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation ("androidx.compose.material:material-icons-extended")
     implementation ("com.squareup.retrofit2:retrofit:2.11.0")
@@ -75,4 +84,8 @@ dependencies {
     implementation ("io.coil-kt:coil-compose:2.4.0")
     implementation ("androidx.biometric:biometric:1.2.0-alpha05")
     implementation("androidx.appcompat:appcompat:1.6.1")
+        // Maps SDK for Android
+        implementation ("com.google.android.gms:play-services-maps:18.2.0")
+
+
 }

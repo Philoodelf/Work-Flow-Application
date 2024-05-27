@@ -39,10 +39,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.work_flowapplication.R
+import com.example.work_flowapplication.Screens
 import com.example.work_flowapplication.ui.api.ApiManger
 import com.example.work_flowapplication.ui.api.LoginRequest
 import com.example.work_flowapplication.ui.api.LoginResponse
 import com.example.work_flowapplication.ui.localdata.decodeAndSaveTokenData
+import com.example.work_flowapplication.ui.localdata.getRole
 import com.example.work_flowapplication.ui.localdata.saveToken
 import retrofit2.Call
 import retrofit2.Response
@@ -150,7 +152,11 @@ TextButton(onClick = {
                         Log.e("tag", "onResponse: Login successful, token: ${body.token}")
                         saveToken(context,body.token)
                         decodeAndSaveTokenData(context, body.token)
-                        navController.navigate(Screens.home.route){}
+                        if (getRole(context)=="admin")
+                        navController.navigate(Screens.Home.route){}
+                        else if (getRole(context)=="user"){  navController.navigate(Screen_employee.home.route)}
+                        Log.e("tag", "onResponse: Login  , token: ${body.token}")
+                        Log.e("tag", "onResponse: Login  , token: ${getRole(context)}")
                         // Store the token for future use (e.g., using SharedPreferences)
                         // Handle successful login logic (e.g., navigate to main screen)
                     }

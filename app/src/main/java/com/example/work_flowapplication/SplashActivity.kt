@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material3.ExperimentalMaterial3Api
+import com.example.work_flowapplication.ui.localdata.getRole
 import com.example.work_flowapplication.ui.localdata.getToken
 import com.example.work_flowapplication.ui.theme.WorkFlowApplicationTheme
 import com.example.work_flowapplication.ui.theme.home
 import com.example.work_flowapplication.ui.theme.nav
-
 class MainActivity : AppCompatActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
 
@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             WorkFlowApplicationTheme {
+
                 // A surface container using the 'background' color from the theme
                 /*splashscreen()
                 Surface(
@@ -29,17 +30,25 @@ class MainActivity : AppCompatActivity() {
  ProfilePage()
 
 
+
 */
+
                 if (getToken(this)==null) {
                     nav(this)
+                }
+                else{ if (getRole(this)=="admin"){
+                    buttonnav(context1 = this)}
+
+                   else{ home(this)}}
             }
-            else{home(this)}
-
-
-
-            }
+        }
     }
-}}
+
+
+
+            }
+
+
 
 /*@Composable
 fun splashscreen() {

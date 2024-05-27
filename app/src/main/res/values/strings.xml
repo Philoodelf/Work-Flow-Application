@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Work-Flow Application</string>
+    <string name="title_activity_home_admin">HomeAdmin</string>
+    <string name="title_activity_home_nav">HomeNav</string>
+    <string name="title_activity_splash">splash</string>
+    <string name="MAPS_API_KEY">AIzaSyBs-6T7JnFVH-DLB0mKeza9M2A6nY7qzRc</string>
 </resources>

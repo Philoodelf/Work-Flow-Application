@@ -1,5 +1,4 @@
 package com.example.work_flowapplication.ui.theme
-
 import androidx.compose.ui.graphics.Color
 val graycolour = Color(0XFFF5F6FA)
 val Purple80 = Color(0xFFD0BCFF)
@@ -17,5 +16,5 @@ val red =Color(0xFFF00245)
 val darkgray =Color(0xFF9597A4)
 val textfieldcolour =Color(0xFF8EBCFE)
 val bottomicon =Color(0xFF101317)
-   val  ll= Color(0xFF8A8A8A)
+val  ll= Color(0xFF8A8A8A)
 val  gg=Color(0xFF544C4C)

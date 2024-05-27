@@ -197,7 +197,7 @@ fun home( context1:AppCompatActivity) {
                 NavigationBarItem(selected = selected == "home",
                     onClick = {
                         selected = "home"
-                        navigationController.navigate(Screens.clockin.route) {
+                        navigationController.navigate(Screen_employee.clockin.route) {
 
                         }
                     },
@@ -271,7 +271,7 @@ fun home( context1:AppCompatActivity) {
                 NavigationBarItem(selected = selected == "Task",
                     onClick = {
                         selected = "Task"
-                        navigationController.navigate(Screens.Task.route) {
+                        navigationController.navigate(Screen_employee.Task.route) {
                             popUpTo(0)
                         }
 
@@ -329,7 +329,7 @@ fun home( context1:AppCompatActivity) {
 
 
                         selected = "Report"
-                        navigationController.navigate(Screens.Report.route) {
+                        navigationController.navigate(Screen_employee.Report.route) {
                             popUpTo(0)
                         }
                     },
@@ -354,7 +354,7 @@ fun home( context1:AppCompatActivity) {
                 NavigationBarItem(selected = selected == "Profile",
                     onClick = {
                         selected = "Profile"
-                        navigationController.navigate(Screens.Profile.route) {
+                        navigationController.navigate(Screen_employee.Profile.route) {
                             popUpTo(0)
                         }
 
@@ -399,13 +399,13 @@ else lightbluecolour
     { paddingValues ->
         NavHost(
             navController = navigationController,
-            startDestination = Screens.clockin.route,
+            startDestination = Screen_employee.clockin.route,
             modifier = Modifier.padding(paddingValues)
         ) {
-            composable(Screens.clockin.route) { clockin(context1) }
-            composable(Screens.Task.route) { app() }
-            composable(Screens.Report.route) { Report() }
-            composable(Screens.Profile.route) { }
+            composable(Screen_employee.clockin.route) { clockin(context1) }
+            composable(Screen_employee.Task.route) { app() }
+            composable(Screen_employee.Report.route) { Report() }
+            composable(Screen_employee.Profile.route) { }
         }
 
 
