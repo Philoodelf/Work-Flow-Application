@@ -3,6 +3,7 @@ package com.example.work_flowapplication
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -53,6 +54,7 @@ import androidx.navigation.NavHostController
 @Composable
 fun Search(  navController: NavHostController
 ) {
+    Box(Modifier.background(Color.White)) {
 //    TextButton(onClick = { navController.popBackStack() },) {
 //        Icon(
 //            imageVector = Icons.Default.ArrowBack,
@@ -76,8 +78,8 @@ fun Search(  navController: NavHostController
 
             employye()
         }
+    }
 }
-
 
 @Composable
 fun employye() {
@@ -97,7 +99,7 @@ fun employye() {
     ElevatedCard(elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
         modifier = Modifier
             .size(width = 380.dp, height = 110.dp)
-            .padding(start = 32.dp, top = 16.dp)
+            .padding(start = 22.dp, top = 16.dp)
             .clickable { "to do" },
         colors = CardDefaults.cardColors(Color.White)) {
         //image + name + job

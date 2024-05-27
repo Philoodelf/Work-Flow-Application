@@ -1,5 +1,7 @@
 package com.example.work_flowapplication
 
+import com.example.work_flowapplication.ui.theme.Screen_employee
+
 //sealed class Screens(val screen: String) {
 //  data class Home(val title: String = "Home") : Screens(title)
 //  data class Requests(val title: String = "Requests") : Screens(title)
@@ -15,5 +17,6 @@ sealed class Screens(val route: String) {
   object Profile : Screens("Profile")
   object SendAlert : Screens("Send Alert")
   object Search : Screens("Search")
+
 }
 

@@ -1,5 +1,6 @@
 package com.example.work_flowapplication
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -42,41 +43,45 @@ fun SendAlert(
     //navController: NavController
     navController: NavHostController
     ) {
-
-    var title:String
-    title = Screens.SendAlert.route.toString()
-
-    Column {
+    Box(Modifier.background(Color.White).fillMaxSize()) {
 
 
-        TextButton(onClick = { navController.popBackStack() },) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                tint = Color(0xFF029DF0),
-                contentDescription = "Back",
+        var title: String
+        title = Screens.SendAlert.route.toString()
+
+        Column {
+
+
+            TextButton(onClick = { navController.popBackStack() },) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    tint = Color(0xFF029DF0),
+                    contentDescription = "Back",
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                        .size(25.dp)
+
+                )
+            }
+            Box(
                 modifier = Modifier
-                    .padding(top = 16.dp)
-                    .size(25.dp)
+                    .padding(start = 20.dp, top = 16.dp, end = 16.dp)
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                sendmessage()
+            }
+            Box(
+                modifier = Modifier
+                    .padding(start = 50.dp, end = 8.dp, top = 50.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                send(navController = navController)
+            }
 
-            )
         }
-        Box(modifier = Modifier
-            .padding(start = 20.dp, top = 16.dp, end = 16.dp)
-            .fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ){
-            sendmessage()
-        }
-        Box(modifier = Modifier
-            .padding(start = 50.dp, end = 8.dp, top = 50.dp)
-          ,  contentAlignment = Alignment.Center
-        ){
-            send(navController = navController)
-        }
-
     }
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -4,6 +4,7 @@ import android.graphics.drawable.Icon
 import android.icu.util.Calendar.WeekData
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -48,8 +49,9 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun Request() {
-    var title =""
-    title = Screens.Requests.route.toString()
+    Box(Modifier.background(Color.White)) {
+        var title = ""
+        title = Screens.Requests.route.toString()
 //    Box(modifier = Modifier.fillMaxSize()){
 //        Column(modifier = Modifier
 //            .fillMaxSize()
@@ -63,160 +65,208 @@ fun Request() {
 //        }
 //    }
 
-    val items= listOf(
-        RequestItem("Davina Cornish", "Programmer", "1 Day", "Sick"," Wed 17 June"," to "," Wed 17 June","Sick"),
-        RequestItem("Sam Dino", "Front-End", "Swap", ""," Thur 18 June"," to "," Thur 18 June","Swap"),
-        RequestItem("Mark Scot", "Back-End", "2 Days", "Vacation"," Fri 19 June"," to "," Sun 20 June","Vacation Leave"),
-        RequestItem("Mario Guy", "Flutter-Developer", "1 Week", "Injured"," Sat 10 June"," to "," Sat 17 June","Car Accident"),
-        RequestItem("Peter Patrick", "Sales", "1 Day", "Fest"," Mon 12 June"," to "," Mon 12 June","Day Off"),
-    )
-LazyColumn(){
-   items(items){
-
-    (name, job, info1, info2,time1,to,time2,conditionof ) ->
-
-       ElevatedCard(elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
-    modifier = Modifier
-        .size(width = 380.dp, height = 150.dp)
-        .padding(start = 32.dp, top = 16.dp)
-        .clickable { "to do" },
-    colors = CardDefaults.cardColors(Color.White)) {
-    //image + name + job
-    Row(modifier = Modifier) {
-        Image(
-            painter = painterResource(id = R.drawable.requestprofile),
-            contentDescription = "des",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(60.dp)
-                .clip(RoundedCornerShape(16.dp))
-                .padding(start = 15.dp, top = 15.dp)
+        val items = listOf(
+            RequestItem(
+                "Davina Cornish",
+                "Programmer",
+                "1 Day",
+                "Sick",
+                " Wed 17 June",
+                " to ",
+                " Wed 17 June",
+                "Sick"
+            ),
+            RequestItem(
+                "Sam Dino",
+                "Front-End",
+                "Swap",
+                "",
+                " Thur 18 June",
+                " to ",
+                " Thur 18 June",
+                "Swap"
+            ),
+            RequestItem(
+                "Mark Scot",
+                "Back-End",
+                "2 Days",
+                "Vacation",
+                " Fri 19 June",
+                " to ",
+                " Sun 20 June",
+                "Vacation Leave"
+            ),
+            RequestItem(
+                "Mario Guy",
+                "Flutter-Developer",
+                "1 Week",
+                "Injured",
+                " Sat 10 June",
+                " to ",
+                " Sat 17 June",
+                "Car Accident"
+            ),
+            RequestItem(
+                "Peter Patrick",
+                "Sales",
+                "1 Day",
+                "Fest",
+                " Mon 12 June",
+                " to ",
+                " Mon 12 June",
+                "Day Off"
+            ),
         )
-        Column(modifier = Modifier.padding(15.dp)) {
-            Text(name, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
-            Text(job, fontSize = 10.sp)
-        }
+        LazyColumn() {
+            items(items) {
 
-        Spacer(modifier = Modifier.weight(1f))
+                    (name, job, info1, info2, time1, to, time2, conditionof) ->
+
+                ElevatedCard(
+                    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+                    modifier = Modifier
+                        .size(width = 380.dp, height = 150.dp)
+                        .padding(start = 32.dp, top = 16.dp)
+                        .clickable { "to do" },
+                    colors = CardDefaults.cardColors(Color.White)
+                ) {
+                    //image + name + job
+                    Row(modifier = Modifier) {
+                        Image(
+                            painter = painterResource(id = R.drawable.requestprofile),
+                            contentDescription = "des",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .size(60.dp)
+                                .clip(RoundedCornerShape(16.dp))
+                                .padding(start = 15.dp, top = 15.dp)
+                        )
+                        Column(modifier = Modifier.padding(15.dp)) {
+                            Text(name, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                            Text(job, fontSize = 10.sp)
+                        }
+
+                        Spacer(modifier = Modifier.weight(1f))
 //            Icon(
 //                Icons.Rounded.CheckCircle,
 //                contentDescription = "no",
 //                tint = Color(0xFF34A853),
 //                modifier = Modifier.size(50.dp).padding(start = 4.dp, end = 4.dp)
 //            )
-        Box(
-            modifier = Modifier.padding(end = 16.dp),
-            contentAlignment = Alignment.TopEnd
-        ) {
-            Box(modifier = Modifier
-                .padding(end = 38.dp, top = 4.dp)
-                .clickable { /*to do*/ }) {
+                        Box(
+                            modifier = Modifier.padding(end = 16.dp),
+                            contentAlignment = Alignment.TopEnd
+                        ) {
+                            Box(modifier = Modifier
+                                .padding(end = 38.dp, top = 4.dp)
+                                .clickable { /*to do*/ }) {
 
-                Image(
-                    painter = painterResource(id = R.drawable.correcticon),
-                    contentDescription = "des",
-                    modifier = Modifier
-                        .size(46.dp)
-                        .padding(8.dp)
-                )
+                                Image(
+                                    painter = painterResource(id = R.drawable.correcticon),
+                                    contentDescription = "des",
+                                    modifier = Modifier
+                                        .size(46.dp)
+                                        .padding(8.dp)
+                                )
 
-            }
-            Box(modifier = Modifier.clickable { /*to do*/ }) {
-                Image(
-                    painter = painterResource(id = R.drawable.xicon),
-                    contentDescription = "des",
-                    modifier = Modifier
-                        .size(52.dp)
-                        .padding(8.dp)
-                )
-            }
+                            }
+                            Box(modifier = Modifier.clickable { /*to do*/ }) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.xicon),
+                                    contentDescription = "des",
+                                    modifier = Modifier
+                                        .size(52.dp)
+                                        .padding(8.dp)
+                                )
+                            }
 
 
-        }
-    }
-    // date + time + info
-    Column {
-        Row(modifier = Modifier.padding(start = 25.dp, top = 5.dp)) {
-            Icon(
-                Icons.Rounded.DateRange,
-                contentDescription = "icon",
-                tint = Color(0xFF029DF0),
-                modifier = Modifier.size(15.dp)
-            )
-            Text(time1, fontSize = 11.sp, fontWeight = FontWeight.SemiBold)
-            Text(to, fontSize = 11.sp, fontWeight = FontWeight.SemiBold)
-            Text(time2, fontSize = 11.sp, fontWeight = FontWeight.SemiBold)
+                        }
+                    }
+                    // date + time + info
+                    Column {
+                        Row(modifier = Modifier.padding(start = 25.dp, top = 5.dp)) {
+                            Icon(
+                                Icons.Rounded.DateRange,
+                                contentDescription = "icon",
+                                tint = Color(0xFF029DF0),
+                                modifier = Modifier.size(15.dp)
+                            )
+                            Text(time1, fontSize = 11.sp, fontWeight = FontWeight.SemiBold)
+                            Text(to, fontSize = 11.sp, fontWeight = FontWeight.SemiBold)
+                            Text(time2, fontSize = 11.sp, fontWeight = FontWeight.SemiBold)
 
-        }
+                        }
 
-        Row(modifier = Modifier.padding(start = 24.dp, top = 5.dp)) {
-            Icon(
-                Icons.Rounded.List,
-                contentDescription = "icon",
-                tint = Color(0xFF029DF0),
-                modifier = Modifier.size(18.dp)
-            )
-            Text(conditionof, fontSize = 11.sp, fontWeight = FontWeight.SemiBold)
+                        Row(modifier = Modifier.padding(start = 24.dp, top = 5.dp)) {
+                            Icon(
+                                Icons.Rounded.List,
+                                contentDescription = "icon",
+                                tint = Color(0xFF029DF0),
+                                modifier = Modifier.size(18.dp)
+                            )
+                            Text(conditionof, fontSize = 11.sp, fontWeight = FontWeight.SemiBold)
 
-        }
-    }
-    // info
-    Row(modifier = Modifier.padding(start = 25.dp, top = 5.dp)
-    ) {
-        Card(
-            modifier = Modifier
-                .size(width = 53.dp, height = 21.dp)
-                .wrapContentWidth(),
-            shape = RoundedCornerShape(10.dp),
-            colors = CardDefaults.cardColors(Color(0xFFECEDF1))
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .wrapContentSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = info1,
-                    fontSize = 10.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-            }
-        }
+                        }
+                    }
+                    // info
+                    Row(
+                        modifier = Modifier.padding(start = 25.dp, top = 5.dp)
+                    ) {
+                        Card(
+                            modifier = Modifier
+                                .size(width = 53.dp, height = 21.dp)
+                                .wrapContentWidth(),
+                            shape = RoundedCornerShape(10.dp),
+                            colors = CardDefaults.cardColors(Color(0xFFECEDF1))
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .wrapContentSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = info1,
+                                    fontSize = 10.sp,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            }
+                        }
 
-        if (info2.isNotBlank()){
-            Card(
-                modifier = Modifier
-                    .size(width = 62.dp, height = 21.dp)
-                    .padding(start = 10.dp)
-                    .wrapContentWidth(),
-                shape = RoundedCornerShape(10.dp),
-                colors = CardDefaults.cardColors(Color(0xFFECEDF1))
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .wrapContentSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = info2,
-                        fontSize = 10.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
+                        if (info2.isNotBlank()) {
+                            Card(
+                                modifier = Modifier
+                                    .size(width = 62.dp, height = 21.dp)
+                                    .padding(start = 10.dp)
+                                    .wrapContentWidth(),
+                                shape = RoundedCornerShape(10.dp),
+                                colors = CardDefaults.cardColors(Color(0xFFECEDF1))
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .wrapContentSize(),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = info2,
+                                        fontSize = 10.sp,
+                                        fontWeight = FontWeight.SemiBold
+                                    )
+                                }
+                            }
+                        }
+
+                    }
+
+
                 }
             }
+        }
+
+
     }
-
-    }
-
-
-}
-}
-}
-
-
-
 
     }
 

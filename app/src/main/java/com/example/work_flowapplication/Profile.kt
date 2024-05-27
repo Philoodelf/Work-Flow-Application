@@ -8,13 +8,18 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -29,9 +34,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.work_flowapplication.ui.theme.Screen_employee
 
 @Composable
-fun Profile() {
+fun Profile(navController: NavController) {
+
+    Box(Modifier.background(Color.White)) {
 //    Box(modifier = Modifier.fillMaxSize()){
 //        Column(modifier = Modifier
 //            .fillMaxSize()
@@ -44,36 +53,54 @@ fun Profile() {
 //        }
 //    }
 
-    ElevatedCard(
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        ),
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(18.dp),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(Color.White)
-    ){
+        ElevatedCard(
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 6.dp
+            ),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(18.dp),
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(Color.White)
+        ) {
 
-        //profile
-        Box(){
-            Image(
-                painter = painterResource(id = R.drawable.proprofile),
-                contentDescription = "des",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(100.dp)
-                    .align(Alignment.Center)
-                    .clip(RoundedCornerShape(16.dp))
-                    .padding(start = 15.dp, top = 15.dp)
-            )
-        }
+            Row( modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically) {
+                //profile
+                Box() {
+                    Image(
+                        painter = painterResource(id = R.drawable.proprofile),
+                        contentDescription = "des",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(100.dp)
+                            .align(Alignment.Center)
+                            .clip(RoundedCornerShape(16.dp))
+                            .padding(start = 15.dp, top = 15.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.weight(1f))
 
-        Column(modifier = Modifier) {
+                IconButton(
+                    onClick = {  navController.navigate(Screen_employee.editemployee.route)},
+                    modifier = Modifier.padding(end = 15.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "End Icon",
+                        modifier = Modifier
+                            .size(40.dp) // Adjust the size as needed
+                            .padding(end = 15.dp,)
+                    )
+                }
+            }
+            Column(modifier = Modifier) {
 
-            //name
+                //name
 
-                Text(text = "Name",
+                Text(
+                    text = "Name",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp)
@@ -90,19 +117,20 @@ fun Profile() {
                 ) {
                     Text(
                         text = "Mr.George",
-                        fontWeight = FontWeight.Medium ,
+                        fontWeight = FontWeight.Medium,
                         modifier = Modifier
                             .padding(start = 16.dp, top = 7.dp),
                         textAlign = TextAlign.Center,
+                        color = Color.Black,
                     )
                 }
 
 
+                //Email
 
-            //Email
 
-
-                Text(text = "Email",
+                Text(
+                    text = "Email",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp)
@@ -119,113 +147,120 @@ fun Profile() {
                 ) {
                     Text(
                         text = "George@gmail.com",
-                        fontWeight = FontWeight.Medium ,
+                        fontWeight = FontWeight.Medium,
                         modifier = Modifier
                             .padding(start = 16.dp, top = 7.dp),
                         textAlign = TextAlign.Center,
+                        color = Color.Black,
                     )
                 }
 
-            //Phone
+                //Phone
 
-            Text(text = "Phone",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp)
-            )
-            OutlinedCard(
-                colors = CardDefaults.cardColors(
-                    containerColor = Color(0xFFF5F6FA),
-                ),
-                border = BorderStroke(0.8.dp, Color.Gray),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .size(40.dp)
-                    .padding(start = 12.dp, end = 12.dp)
-            ) {
                 Text(
-                    text = "+20|1205****84",
-                    fontWeight = FontWeight.Medium ,
-                    modifier = Modifier
-                        .padding(start = 16.dp, top = 7.dp),
-                    textAlign = TextAlign.Center,
-                )
-            }
-
-            //address
-
-            Text(text = "Address",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 4.dp)
-            )
-            OutlinedCard(
-                colors = CardDefaults.cardColors(
-                    containerColor = Color(0xFFF5F6FA),
-                ),
-                border = BorderStroke(0.8.dp, Color.Gray),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .size(50.dp)
-                    .padding(start = 12.dp, end = 12.dp)
-            ) {
-                Text(
-                    text = "31 st. Madinat Al Amal\nNew Cairo, Egypt",
-                    fontWeight = FontWeight.Medium ,
-                    modifier = Modifier
-                        .padding(start = 16.dp, top = 4.dp),
-                    textAlign = TextAlign.Center,
-                )
-            }
-
-            //Gender
-
-            Row() {
-                Text(text = "Gender",
+                    text = "Phone",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(start = 16.dp, top = 20.dp, )
+                    modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp)
                 )
-                Text(text = "Birth Date",
+                OutlinedCard(
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color(0xFFF5F6FA),
+                    ),
+                    border = BorderStroke(0.8.dp, Color.Gray),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .size(40.dp)
+                        .padding(start = 12.dp, end = 12.dp)
+                ) {
+                    Text(
+                        text = "+20|1205****84",
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier
+                            .padding(start = 16.dp, top = 7.dp),
+                        textAlign = TextAlign.Center,
+                        color = Color.Black,
+                    )
+                }
+
+                //address
+
+                Text(
+                    text = "Address",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(start = 100.dp, top = 20.dp, )
+                    modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 4.dp)
                 )
-
-            }
-
-            Row(modifier = Modifier.padding(start = 16.dp)) {
-                Box(
+                OutlinedCard(
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color(0xFFF5F6FA),
+                    ),
+                    border = BorderStroke(0.8.dp, Color.Gray),
                     modifier = Modifier
-                        .background(
-                            color = Color(0xFF029DF0),
-                            shape = RoundedCornerShape(10.dp)
-                        )
-                        .size(15.dp)
-                        .padding(start = 16.dp, end = 16.dp)
-                )
-                
-                Text(text = "Male" ,fontWeight = FontWeight.Normal ,
-                    modifier = Modifier
-                        .padding(start = 8.dp,),
+                        .fillMaxWidth()
+                        .size(50.dp)
+                        .padding(start = 12.dp, end = 12.dp)
+                ) {
+                    Text(
+                        text = "31 st. Madinat Al Amal\nNew Cairo, Egypt",
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier
+                            .padding(start = 16.dp, top = 4.dp),
+                        textAlign = TextAlign.Center,
+                        color = Color.Black,
+                    )
+                }
+
+                //Gender
+
+                Row() {
+                    Text(
+                        text = "Gender",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(start = 16.dp, top = 20.dp,)
+                    )
+                    Text(
+                        text = "Birth Date",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(start = 100.dp, top = 20.dp,)
+                    )
+
+                }
+
+                Row(modifier = Modifier.padding(start = 16.dp)) {
+                    Box(
+                        modifier = Modifier
+                            .background(
+                                color = Color(0xFF029DF0),
+                                shape = RoundedCornerShape(10.dp)
+                            )
+                            .size(15.dp)
+                            .padding(start = 16.dp, end = 16.dp)
+                    )
+
+                    Text(
+                        text = "Male", fontWeight = FontWeight.Normal,
+                        modifier = Modifier
+                            .padding(start = 8.dp,),
 //                    textAlign = TextAlign.Center,
-                )
+                    )
 
-                Text(text = "20 May 2002" ,fontWeight = FontWeight.Light ,
-                    modifier = Modifier
-                        .padding(start = 100.dp,),
-                )
+                    Text(
+                        text = "20 May 2002", fontWeight = FontWeight.Light,
+                        modifier = Modifier
+                            .padding(start = 100.dp,),
+                    )
 
 
+                }
 
 
-                
             }
-
 
         }
 
+
     }
-
-
 }

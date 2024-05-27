@@ -56,6 +56,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.work_flowapplication.ui.theme.WorkFlowApplicationTheme
+import com.example.work_flowapplication.ui.theme.editProfilePage
 import com.example.work_flowapplication.ui.theme.ll
 import kotlinx.coroutines.launch
 
@@ -369,7 +370,7 @@ fun buttonnav(context1: AppCompatActivity) {
                             painter = painterResource(R.drawable.dashboard),
                             contentDescription = "",
                             modifier = Modifier.size(25.dp),
-                            tint = if (selected == "Task") iconcolour else ll
+                            tint = if (selected == "Dashboard") iconcolour else ll
                         )
                     }, colors = androidx.compose.material3.NavigationBarItemDefaults.colors(
 
@@ -451,7 +452,7 @@ fun buttonnav(context1: AppCompatActivity) {
             composable(Screens.Requests.route) { Request() }
             composable(Screens.Dashboard.route) { Dashboard(navController = navigationController) }
             composable(Screens.Report.route) { Report() }
-            composable(Screens.Profile.route) { Profile() }
+            composable(Screens.Profile.route) { Profile(navController = navigationController) }
             composable(Screens.SendAlert.route) {
                 SendAlert(
                     // navController = navigationController
@@ -459,6 +460,7 @@ fun buttonnav(context1: AppCompatActivity) {
                 )
             }
             composable(Screens.Search.route) { Search(navController = navigationController) }
+
         }
     }}
 
