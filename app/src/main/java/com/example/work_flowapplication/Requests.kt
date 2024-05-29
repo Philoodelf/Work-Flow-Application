@@ -1,11 +1,8 @@
 package com.example.work_flowapplication
 
-import android.graphics.drawable.Icon
-import android.icu.util.Calendar.WeekData
-import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,11 +16,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.icons.rounded.DateRange
 import androidx.compose.material.icons.rounded.List
 import androidx.compose.material3.Card
@@ -36,18 +28,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.work_flowapplication.ui.theme.graycolour
 
 @Composable
-fun Request() {
+fun Request( modifier: Modifier) {
     var title =""
     title = Screens.Requests.route.toString()
 //    Box(modifier = Modifier.fillMaxSize()){
@@ -70,6 +59,8 @@ fun Request() {
         RequestItem("Mario Guy", "Flutter-Developer", "1 Week", "Injured"," Sat 10 June"," to "," Sat 17 June","Car Accident"),
         RequestItem("Peter Patrick", "Sales", "1 Day", "Fest"," Mon 12 June"," to "," Mon 12 June","Day Off"),
     )
+
+Box(modifier.background(graycolour) ){
 LazyColumn(){
    items(items){
 
@@ -213,7 +204,7 @@ LazyColumn(){
 
 }
 }
-}
+}}
 
 
 

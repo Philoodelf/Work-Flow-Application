@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun Report() {
+fun Report( modifier :Modifier) {
 //    Box(modifier = Modifier.fillMaxSize()){
 //        Column(modifier = Modifier
 //            .fillMaxSize()
@@ -39,7 +39,7 @@ fun Report() {
 //          //  Text(text = "Report", fontSize = 30.sp)
 //        }
 //    }
-    Column {
+    Column(modifier) {
         //first card
         Row {
             Image(

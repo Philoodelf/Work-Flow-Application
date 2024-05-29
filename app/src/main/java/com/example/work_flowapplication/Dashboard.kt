@@ -1,11 +1,6 @@
 package com.example.work_flowapplication
 
 
-import android.widget.Toast
-import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,53 +8,29 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavHostController
+import com.example.work_flowapplication.ui.theme.SecondScreen
+import com.example.work_flowapplication.ui.theme.graycolour
 
 @Composable
-fun Dashboard(
-    navController: NavController
-) {
+fun Dashboard( modifier: Modifier = Modifier,navHostController: NavHostController) {
 
-//    Box(modifier = Modifier.fillMaxSize()){
-//        Column(modifier = Modifier
-//            .fillMaxSize()
-//            .align(Alignment.Center),
-//            verticalArrangement = Arrangement.Center,
-//            horizontalAlignment = Alignment.CenterHorizontally
-//
-//        ) {
-//        //    Text(text = "Dashboard", fontSize = 30.sp)
-//        }
-//    }
-    Column {
+
+    Column (modifier.background(graycolour)){
 
     Box(modifier = Modifier.padding(start = 9.dp, top = 9.dp)) {
         Piechart(
@@ -98,7 +69,7 @@ fun Dashboard(
                             .size(width = 140.dp, height = 120.dp)
                             .padding(8.dp)
                             .clickable {
-                                /*to do */
+                                navHostController.navigate(SecondScreen.Timetrack.route)
                             },
                         colors = CardDefaults.cardColors(Color.White)
                     ) {
@@ -107,7 +78,6 @@ fun Dashboard(
                            Image(
                                painter = painterResource(id = R.drawable.timetrack), contentDescription =null,
                                modifier = Modifier.size(65.dp),
-
 
                            )
                             Text("Time Track", fontSize = 16.sp, color = Color.Black)
@@ -123,7 +93,7 @@ fun Dashboard(
                             .padding(8.dp)
                             .clickable {
                                // navController.navigate("SendAlert")
-                                navController.navigate(Screens.SendAlert.route)
+                 navHostController.navigate(SecondScreen.SendAlert.route)
                             },
                         colors = CardDefaults.cardColors(Color.White)
                     ) {
@@ -133,8 +103,6 @@ fun Dashboard(
                             Image(
                                 painter = painterResource(id = R.drawable.sentalert), contentDescription =null,
                                 modifier = Modifier.size(65.dp),
-
-
                                 )
                             Text("Send Alert", fontSize = 16.sp, color = Color.Black)
                         }
@@ -153,7 +121,7 @@ fun Dashboard(
                             .size(width = 140.dp, height = 120.dp)
                             .padding(8.dp)
                             .clickable {
-                                /*to do */
+                                navHostController.navigate(SecondScreen.CreateTask.route)
                             },
                         colors = CardDefaults.cardColors(Color.White)
                     ) {
@@ -207,8 +175,7 @@ fun Dashboard(
                             .size(width = 140.dp, height = 120.dp)
                             .padding(8.dp)
                             .clickable {
-                                /*to do */
-                                navController.navigate(Screens.Search.route)
+                            navHostController.navigate(SecondScreen.Search.route)
                             },
                         colors = CardDefaults.cardColors(Color.White)
                     ) {
@@ -232,7 +199,7 @@ fun Dashboard(
                             .size(width = 140.dp, height = 120.dp)
                             .padding(8.dp)
                             .clickable {
-                                /*to do */
+                                navHostController.navigate(SecondScreen.Addemployee.route)
                             },
                         colors = CardDefaults.cardColors(Color.White)
                     ) {

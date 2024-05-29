@@ -15,13 +15,13 @@ import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun calender() {
+fun calender(navController: NavHostController) {
 
 Box(modifier =  Modifier.fillMaxSize().background(graycolour))
 {
@@ -75,10 +75,3 @@ AndroidView(factory = {CalendarView(it)},   update = { view ->
 
 
 
-@Composable
-@Preview
-fun calenderpreview(){
-    calender()
-
-
-}

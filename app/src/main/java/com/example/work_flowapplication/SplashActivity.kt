@@ -17,27 +17,11 @@ class MainActivity : AppCompatActivity() {
         setContent {
             WorkFlowApplicationTheme {
 
-                // A surface container using the 'background' color from the theme
-                /*splashscreen()
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                   
-                }*/
-/*loginsereen()
-              moadlbottomsheet()
- ProfilePage()
-
-
-
-*/
-
                 if (getToken(this)==null) {
                     nav(this)
                 }
                 else{ if (getRole(this)=="admin"){
-                    buttonnav(context1 = this)}
+                    buttonnav()}
 
                    else{ home(this)}}
             }
