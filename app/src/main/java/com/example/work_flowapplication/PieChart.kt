@@ -157,14 +157,14 @@ fun detailsPieChartItems(
                     modifier = Modifier.padding(start = 15.dp),
                     text = data.first,
                     fontWeight = FontWeight.Medium,
-                    fontSize = 22.sp,
+                    fontSize = 19.sp,
                     color = Color.Black
                 )
                 Text(
                     modifier = Modifier.padding(start = 15.dp),
                     text = data.second.toString(),
                     fontWeight = FontWeight.Medium,
-                    fontSize = 22.sp,
+                    fontSize = 19.sp,
                     color = Color.Gray
                 )
             }

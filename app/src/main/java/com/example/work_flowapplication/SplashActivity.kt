@@ -44,3 +44,29 @@ class MainActivity : AppCompatActivity() {
 
             }
 
+
+
+/*@Composable
+fun splashscreen() {
+    ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+    val (logo)=createRefs()
+        Image(painter = painterResource(id =R.drawable.logo ), contentDescription ="logo" ,
+            modifier = Modifier.constrainAs(logo) {
+                top.linkTo(parent.top)
+                bottom.linkTo(parent.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            }.clip(RoundedCornerShape(size = 50.dp))
+
+        )
+    }
+}*/
+
+
+/*@Preview(showBackground = true)
+@Composable
+fun GreetingPreview() {
+    WorkFlowApplicationTheme {
+        splashscreen()
+    }
+}*/

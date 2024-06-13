@@ -28,13 +28,13 @@ import com.joelkanyi.horizontalcalendar.HorizontalCalendarView
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun Home() {
+fun Home( modifier :Modifier) {
     var title:String
     title = Screens.Home.route.toString()
     val context = LocalContext.current.applicationContext
 
             Column(
-                modifier = Modifier
+                modifier
                     .fillMaxWidth()
                     .background(Color.White)
                     ,
@@ -57,6 +57,7 @@ fun Home() {
                     ),
                     modifier = Modifier
                         .size(width = 350.dp, height = 620.dp)
+                        .padding(top = 15.dp)
                         //.padding(vertical = 4.dp)
                     , shape = RoundedCornerShape(16.dp),
                     colors = CardDefaults.cardColors(Color.White)
@@ -92,14 +93,14 @@ fun Home() {
                                     .padding(12.dp)
                                     .clickable {
                                         Toast
-                                            .makeText(context, "present 23", Toast.LENGTH_SHORT)
+                                            .makeText(context, "present 52", Toast.LENGTH_SHORT)
                                             .show()
                                     },
                                 colors = CardDefaults.cardColors(Color(0xFFE0EBF4))
                             ) {
                                 Column {
                                     Text("Present", fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
-                                    Text("23", fontSize = 25.sp, color = Color(0xFF45A6F5))
+                                    Text("52", fontSize = 25.sp, color = Color(0xFF45A6F5))
                                 }
 
                             }
@@ -112,7 +113,7 @@ fun Home() {
                                     .padding(12.dp)
                                     .clickable {
                                         Toast
-                                            .makeText(context, "Late in 23", Toast.LENGTH_SHORT)
+                                            .makeText(context, "Late in 24", Toast.LENGTH_SHORT)
                                             .show()
                                     },
                                 colors = CardDefaults.cardColors(Color(0xFFF5EBD7))
@@ -120,7 +121,7 @@ fun Home() {
 
                                 Column {
                                     Text("Late In",fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
-                                    Text("23",fontSize = 25.sp, color = Color(0xFFF09E07))
+                                    Text("24",fontSize = 25.sp, color = Color(0xFFF09E07))
                                 }
                             }
                         }
@@ -138,7 +139,7 @@ fun Home() {
                                     .padding(12.dp)
                                     .clickable {
                                         Toast
-                                            .makeText(context, "early leave 23", Toast.LENGTH_SHORT)
+                                            .makeText(context, "early leave 10", Toast.LENGTH_SHORT)
                                             .show()
                                     },
                                 colors = CardDefaults.cardColors(Color(0xFFA7D5C9))
@@ -146,7 +147,7 @@ fun Home() {
 
                                 Column {
                                     Text("Early Leave",fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
-                                    Text("23",fontSize = 25.sp, color = Color(0xFF05B279))
+                                    Text("10",fontSize = 25.sp, color = Color(0xFF05B279))
                                 }
                             }
                             //fourth
@@ -159,7 +160,7 @@ fun Home() {
                                     .padding(12.dp)
                                     .clickable {
                                         Toast
-                                            .makeText(context, "Absents 23", Toast.LENGTH_SHORT)
+                                            .makeText(context, "Absents 8", Toast.LENGTH_SHORT)
                                             .show()
                                     },
                                 colors = CardDefaults.cardColors(Color(0xFFED9BA4))
@@ -167,7 +168,7 @@ fun Home() {
 
                                 Column {
                                     Text("Absents",fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
-                                    Text("23",fontSize = 25.sp, color = Color(0xFFF75262))
+                                    Text("8",fontSize = 25.sp, color = Color(0xFFF75262))
                                 }
                             }
 
@@ -186,7 +187,7 @@ fun Home() {
                                     .padding(12.dp)
                                     .clickable {
                                         Toast
-                                            .makeText(context, "Vacation 23", Toast.LENGTH_SHORT)
+                                            .makeText(context, "Vacation 5", Toast.LENGTH_SHORT)
                                             .show()
                                     },
                                 colors = CardDefaults.cardColors(Color(0xFFE5E5F5))
@@ -194,7 +195,7 @@ fun Home() {
 
                                 Column {
                                     Text("Vacation",fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
-                                    Text("23",fontSize = 25.sp, color = Color(0xFFAEAEE0))
+                                    Text("5",fontSize = 25.sp, color = Color(0xFFAEAEE0))
                                 }
                             }
                             //sixth
@@ -206,7 +207,7 @@ fun Home() {
                                     .padding(12.dp)
                                     .clickable {
                                         Toast
-                                            .makeText(context, "Deadline 23", Toast.LENGTH_SHORT)
+                                            .makeText(context, "Deadline 3", Toast.LENGTH_SHORT)
                                             .show()
                                     },
                                 colors = CardDefaults.cardColors(Color(0xFFF6E5DE))
@@ -214,7 +215,7 @@ fun Home() {
 
                                 Column {
                                     Text("Deadline Task",fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
-                                    Text("23",fontSize = 25.sp, color = Color(0xFFE6B6A2))
+                                    Text("3",fontSize = 25.sp, color = Color(0xFFE6B6A2))
                                 }
                             }
 
