@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.sp
 import com.example.work_flowapplication.ui.theme.graycolour
 
 @Composable
-fun Request( modifier: Modifier) {
+fun Request() {
     var title =""
     title = Screens.Requests.route.toString()
 //    Box(modifier = Modifier.fillMaxSize()){
@@ -60,7 +60,7 @@ fun Request( modifier: Modifier) {
         RequestItem("Peter Patrick", "Sales", "1 Day", "Fest"," Mon 12 June"," to "," Mon 12 June","Day Off"),
     )
 
-Box(modifier.background(graycolour) ){
+Box( modifier = Modifier.background(graycolour) ){
 LazyColumn(){
    items(items){
 

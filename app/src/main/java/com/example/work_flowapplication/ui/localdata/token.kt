@@ -10,6 +10,9 @@ private const val PREF_NAME = "com.example.work_flowapplication.ui.theme"
 private const val TOKEN_KEY = "token"
 private const val NAME_KEY = "name"
 private const val ROLE_KEY = "role"
+private const val CIRCLE_LATITUDE_KEY = "circle_latitude"
+private const val CIRCLE_LONGITUDE_KEY = "circle_longitude"
+private const val CIRCLE_RADIUS_KEY = "circle_radius"
 
 fun saveToken(context: Context, token: String?) {
     val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
@@ -61,6 +64,9 @@ fun getName(context: Context): String? {
     return sharedPreferences.getString(NAME_KEY, null)
 }
 
+
+
+
 // New function to handle receiving a new token and updating the role
 fun updateTokenAndRole(context: Context, newToken: String?) {
     // Delete the existing token and associated data
@@ -70,6 +76,27 @@ fun updateTokenAndRole(context: Context, newToken: String?) {
     // Decode the new token and save the new role
     decodeAndSaveTokenData(context, newToken)
 }
+fun saveCirclePosition(context: Context, latitude: Double, longitude: Double, radius: Double) {
+    val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+    editor.putString(CIRCLE_LATITUDE_KEY, latitude.toString())
+    editor.putString(CIRCLE_LONGITUDE_KEY, longitude.toString())
+    editor.putString(CIRCLE_RADIUS_KEY, radius.toString())
+    editor.apply()
+}
+fun getCirclePosition(context: Context): Triple<Double, Double, Double>? {
+    val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    val latitude = sharedPreferences.getString(CIRCLE_LATITUDE_KEY, null)?.toDoubleOrNull()
+    val longitude = sharedPreferences.getString(CIRCLE_LONGITUDE_KEY, null)?.toDoubleOrNull()
+    val radius = sharedPreferences.getString(CIRCLE_RADIUS_KEY, null)?.toDoubleOrNull()
+
+    return if (latitude != null && longitude != null && radius != null) {
+        Triple(latitude, longitude, radius)
+    } else {
+        null
+    }
+}
+
 
 class Biometric(private val context: Context) {
 
@@ -100,4 +127,7 @@ class Biometric(private val context: Context) {
     private fun decodeFromString(encodedString: String): ByteArray {
         return Base64.decode(encodedString, Base64.DEFAULT)
     }
+
+
+
 }

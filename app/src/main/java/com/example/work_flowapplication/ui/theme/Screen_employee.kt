@@ -9,4 +9,9 @@ sealed class Screen_employee(val route:String){
  object clockin:Screen_employee("clockin")
 
  object login:Screen_employee("login")
+
+ object homeadmin:Screen_employee("homeadmin")
+
+
+
 }

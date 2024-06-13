@@ -72,8 +72,9 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.work_flowapplication.R
-import com.example.work_flowapplication.ui.api.Alltaskrespond
 import com.example.work_flowapplication.ui.api.ApiManger
+import com.example.work_flowapplication.ui.api.Vacationrequest
+import com.example.work_flowapplication.ui.api.Vacationrespond
 import com.example.work_flowapplication.ui.localdata.getToken
 import retrofit2.Call
 import retrofit2.Response
@@ -102,11 +103,13 @@ fun home( context1:AppCompatActivity) {
     var selectedBox by remember { mutableStateOf(0)}
     var selectedtext by remember { mutableStateOf("Remotly")}
     var selectedstartdate by remember { mutableStateOf("")}
-
+    var selectedtenddate by remember { mutableStateOf("") }
     var selectfile by remember {
         mutableStateOf(false)
     }
-
+    var text2 by remember {
+        mutableStateOf("")
+    }
         val item = listOf(
         bottomnavigationitem(
             title = "home",
@@ -293,38 +296,6 @@ fun home( context1:AppCompatActivity) {
 
                 NavigationBarItem(selected = selected == "Report",
                     onClick = {
-                        ApiManger.getapiservices().getalltask(getToken(context))
-                            .enqueue(object : retrofit2.Callback<Alltaskrespond> {
-                                override fun onResponse(
-                                    p0: Call<Alltaskrespond>,
-                                    p1: Response<Alltaskrespond>
-                                ) {
-                                    val body = p1.body()
-
-
-                                    Log.e(
-                                        "tag",
-                                        "onResponse: getalltask successful, token: ${p1.body()?.message}"
-                                    )
-                                    Log.e(
-                                        "tag",
-                                        "onResponse:  getalltask successful, token: ${p1.body()?.result}"
-                                    )
-
-
-                                }
-
-                                override fun onFailure(p0: Call<Alltaskrespond>, p1: Throwable) {
-                                    Log.e(
-                                        "tag",
-                                        "onResponse:  getalltask notsuccessful, token: ${p1}"
-                                    )
-                                }
-
-
-                            })
-
-
                         selected = "Report"
                         navigationController.navigate(Screen_employee.Report.route) {
                             popUpTo(0)
@@ -401,7 +372,7 @@ else lightbluecolour
         ) {
             composable(Screen_employee.clockin.route) { clockin(context1) }
             composable(Screen_employee.Task.route) { app() }
-            composable(Screen_employee.Report.route) { Report() }
+            composable(Screen_employee.Report.route) { com.example.work_flowapplication.Report() }
             composable(Screen_employee.Profile.route) { }
         }
 
@@ -458,9 +429,7 @@ else lightbluecolour
                         .background(white)
                 ) {
                     Column {
-                        var text2 by remember {
-                            mutableStateOf("")
-                        }
+
                         OutlinedTextField(value = text2,
                             onValueChange = { text2 = it },
                             modifier = Modifier
@@ -559,7 +528,7 @@ else lightbluecolour
                                             .background(if (selectedBox == 1) bluecolour else graycolour)
                                             .clickable {
                                                 selectedBox = 1
-                                                selectedtext = "Vacation"
+                                                selectedtext = "vacation"
                                             }
 
                                     ) {
@@ -575,7 +544,7 @@ else lightbluecolour
                                                 tint = if (selectedBox == 1) white else bluecolour
                                             )
                                             Text(
-                                                text = "Vacation",
+                                                text = "vacation",
                                                 fontSize = 12.sp,
                                                 fontWeight = FontWeight.Bold,
                                                 modifier = Modifier.padding(start = 8.dp)
@@ -601,7 +570,7 @@ else lightbluecolour
                                             .background(if (selectedBox == 2) bluecolour else graycolour)
                                             .clickable {
                                                 selectedBox = 2
-                                                selectedtext = "Sick Leave"
+                                                selectedtext = "sick Leave"
                                             }
 
                                     ) {
@@ -642,7 +611,7 @@ else lightbluecolour
                                             .background(if (selectedBox == 3) bluecolour else graycolour)
                                             .clickable {
                                                 selectedBox = 3
-                                                selectedtext = "Remotly"
+                                                selectedtext = "remotly"
                                             }
                                     ) {
                                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -688,14 +657,13 @@ else lightbluecolour
                             Modifier
                                 .fillMaxWidth()
                                 .height(55.dp)
-                                .clickable { showDatePicker = true
-                                           calendercolour=false
-                                           },
+                                .clickable {
+                                    showDatePicker = true
+                                    calendercolour = false
+                                },
                             colors = CardDefaults.cardColors(containerColor = white),
                             border = BorderStroke(2.dp, textfieldcolour)
                         ) {
-
-
                             Row(
                                 modifier = Modifier
                                     .padding(top = 16.dp)
@@ -713,7 +681,9 @@ else lightbluecolour
                                     text = selectedstartdate,
                                     fontSize = 15.sp,
                                     fontWeight = FontWeight.Normal,
-                                    modifier = Modifier.width(97.dp).height(20.dp), color = black
+                                    modifier = Modifier
+                                        .width(97.dp)
+                                        .height(20.dp), color = black
                                 )
                                 Icon(
                                     painter = painterResource(id = R.drawable.calendaricon),
@@ -721,65 +691,48 @@ else lightbluecolour
                                     modifier = Modifier
                                         .width(25.dp)
                                         .height(25.dp),
-                                    tint = if(calendercolour) bluecolour
-                                    else{
-                                        black}
+                                    tint = if (calendercolour) bluecolour else black
                                 )
-
-
                             }
+
                             val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                             if (showDatePicker) {
                                 DatePickerDialog(onDismissRequest = { /*TODO*/ }, confirmButton = {
-                                    TextButton(onClick =
-
-                                    {
-
+                                    TextButton(onClick = {
                                         showDatePicker = false
                                         val selectedDate = Calendar.getInstance().apply {
                                             timeInMillis = datePickerState.selectedDateMillis!!
                                         }
-                                        selectedstartdate =
-                                            "${dateFormatter.format(selectedDate.time)}"
-
+                                        selectedstartdate = dateFormatter.format(selectedDate.time)
                                     }) {
                                         Text(text = "OK")
                                     }
-
-                                },
-
-                                    dismissButton = {
-                                        TextButton(onClick = { showDatePicker = false }) {
-                                            Text(text = "Cancel")
-                                        }
-
-                                    }) {
+                                }, dismissButton = {
+                                    TextButton(onClick = { showDatePicker = false }) {
+                                        Text(text = "Cancel")
+                                    }
+                                }) {
                                     DatePicker(state = datePickerState)
                                 }
-
-
                             }
-
-
                         }
 
                         var datePickerState2 = rememberDatePickerState()
                         var showDatePickerEndDate by remember { mutableStateOf(false) }
-                        var selectedtenddate by remember { mutableStateOf("") }
                         var calendercolur2 by remember { mutableStateOf(true) }
+
                         Spacer(modifier = Modifier.height(25.dp))
                         Card(
                             Modifier
                                 .fillMaxWidth()
                                 .height(55.dp)
-                                .clickable { showDatePickerEndDate = true
-                                           calendercolur2=false
-                                           },
+                                .clickable {
+                                    showDatePickerEndDate = true
+                                    calendercolur2 = false
+                                },
                             colors = CardDefaults.cardColors(containerColor = white),
                             border = BorderStroke(2.dp, textfieldcolour)
                         ) {
-
-
                             Row(
                                 modifier = Modifier
                                     .padding(top = 16.dp)
@@ -797,7 +750,9 @@ else lightbluecolour
                                     text = selectedtenddate,
                                     fontSize = 15.sp,
                                     fontWeight = FontWeight.Normal,
-                                    modifier = Modifier.width(97.dp).height(20.dp), color = black
+                                    modifier = Modifier
+                                        .width(97.dp)
+                                        .height(20.dp), color = black
                                 )
                                 Icon(
                                     painter = painterResource(id = R.drawable.calendaricon),
@@ -805,46 +760,30 @@ else lightbluecolour
                                     modifier = Modifier
                                         .width(25.dp)
                                         .height(25.dp),
-                                    tint = if(calendercolur2) bluecolour
-                                    else{
-                                        black}
+                                    tint = if (calendercolur2) bluecolour else black
                                 )
-
-
                             }
+
                             val dateFormatte = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                             if (showDatePickerEndDate) {
                                 DatePickerDialog(onDismissRequest = { /*TODO*/ }, confirmButton = {
-                                    TextButton(onClick =
-
-                                    {
-
-
-                                        val SelectedDatee = Calendar.getInstance().apply {
-                                            timeInMillis = datePickerState.selectedDateMillis!!
+                                    TextButton(onClick = {
+                                        val selectedDatee = Calendar.getInstance().apply {
+                                            timeInMillis = datePickerState2.selectedDateMillis!!
                                         }
-                                        selectedtenddate =
-                                            "${dateFormatte.format(SelectedDatee.time)}"
+                                        selectedtenddate = dateFormatte.format(selectedDatee.time)
                                         showDatePickerEndDate = false
                                     }) {
                                         Text(text = "OK")
                                     }
-
-                                },
-
-                                    dismissButton = {
-                                        TextButton(onClick = { showDatePickerEndDate = false }) {
-                                            Text(text = "Cancel")
-                                        }
-
-                                    }) {
+                                }, dismissButton = {
+                                    TextButton(onClick = { showDatePickerEndDate = false }) {
+                                        Text(text = "Cancel")
+                                    }
+                                }) {
                                     DatePicker(state = datePickerState2)
                                 }
-
-
                             }
-
-
                         }
 
                         Spacer(modifier = Modifier.height(25.dp))
@@ -958,34 +897,86 @@ else lightbluecolour
                     )
 
                 }
+                    val reson=selectedtext
+                    val description=text2
+                    val startdate=selectedstartdate
+                    val enddate=selectedtenddate
+                     val status="accepted"
+                    val file=""
+val send=Vacationrequest(reson,file,enddate,description,startdate,status)
                     Spacer(modifier = Modifier.width(24.dp))
-                    TextButton(
-                        onClick = {
-
-
-
-
-
-
-
-
-
-
-                        }, modifier = Modifier
-                            .width(160.dp)
-                            .height(60.dp)
-                            .clip(RoundedCornerShape(1.dp)),
-                        colors = ButtonDefaults.buttonColors(containerColor = bluecolour)
-                    ) {
-
-                        Text(
-                            text = "Apply",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = white
-                        )
-
+                    fun handleApiError(response: Response<Vacationrespond>) {
+                        when (response.code()) {
+                            401 -> {
+                                // Handle Unauthorized - token may be invalid or expired
+                                Log.e("tag", "onResponse: unauthorized, token might be expired or invalid")
+                                // You can prompt the user to login again or refresh the token
+                            }
+                            429 -> {
+                                // Handle Too Many Requests - rate limiting
+                                Log.e("tag", "onResponse: too many requests, retry after some time")
+                                // You can implement a retry mechanism with exponential backoff
+                            }
+                            400 -> {
+                                // Handle Bad Request
+                                val errorBody = response.errorBody()?.string()
+                                Log.e("tag", "onResponse: bad request, error: $errorBody")
+                            }
+                            500 -> {
+                                // Handle Internal Server Error
+                                val errorBody = response.errorBody()?.string()
+                                Log.e("tag", "onResponse: server error, error: $errorBody")
+                            }
+                            else -> {
+                                // Handle other status codes
+                                val errorBody = response.errorBody()?.string()
+                                Log.e("tag", "onResponse: error, code: ${response.code()}, error: $errorBody")
+                            }
+                        }
                     }
+                        TextButton(
+                            onClick = {
+                                val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWhtZWQiLCJ1c2VybGQiOiI2NjYwYWRhNGU5NTc5YTk2N2QwNjNmMjAiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxNzYyNDM3Nn0.DJs8Okc7tMCpMde2W71SoUAF-aN7M_0O0JwIgvDnUxE"
+
+
+                                Log.e("tag", "API start...")
+
+                                ApiManger.getapiservices().createvacation(getToken(context),send)
+                                    .enqueue(object : retrofit2.Callback<Vacationrespond> {
+                                        override fun onResponse(
+                                            call: Call<Vacationrespond>,
+                                            response: Response<Vacationrespond>
+                                        ) {
+                                            val body = response.body()
+                                            if (response.isSuccessful && body != null) {
+                                                Log.e("tag", "onResponse: create vacation successful")
+                                                Log.e("tag", "onResponse: message: ${body.message}")
+                                                Log.e("tag", "onResponse: result: ${body.result}")
+                                            } else {
+                                                handleApiError(response)
+                                            }
+                                        }
+
+                                        override fun onFailure(call: Call<Vacationrespond>, t: Throwable) {
+                                            Log.e("tag", "onFailure: create vacation not successful, error: ${t.message}", t)
+                                        }
+                                    })
+                            },
+                            modifier = Modifier
+                                .width(160.dp)
+                                .height(60.dp)
+                                .clip(RoundedCornerShape(1.dp)),
+                            colors = ButtonDefaults.buttonColors(containerColor = bluecolour)
+                        ) {
+                            Text(
+                                text = "Apply",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = white
+                            )
+                        }
+
+
 
             }
                 }

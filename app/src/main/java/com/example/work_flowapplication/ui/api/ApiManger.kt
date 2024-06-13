@@ -8,9 +8,9 @@ import java.util.concurrent.TimeUnit
 class ApiManger private constructor(){
 companion object {
     val client = OkHttpClient.Builder()
-        .connectTimeout(30, TimeUnit.SECONDS) // Adjust timeout value as needed
-        .readTimeout(30, TimeUnit.SECONDS)
-        .writeTimeout(30, TimeUnit.SECONDS)
+        .connectTimeout(100, TimeUnit.SECONDS) // Adjust timeout value as needed
+        .readTimeout(100, TimeUnit.SECONDS)
+        .writeTimeout(100, TimeUnit.SECONDS)
         .build()
 
 

@@ -1,5 +1,6 @@
 package com.example.work_flowapplication.ui.theme
 
+import android.util.Log
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -59,6 +60,12 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
 import com.example.work_flowapplication.R
+import com.example.work_flowapplication.ui.api.ApiManger
+import com.example.work_flowapplication.ui.api.Sendtaskrequest
+import com.example.work_flowapplication.ui.api.Sendtaskrespond
+import com.example.work_flowapplication.ui.localdata.getToken
+import retrofit2.Call
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -91,7 +98,14 @@ fun moadlbottomsheettask(navController: NavHostController){
     )
 
     val context = LocalContext.current.applicationContext
-
+    var selectedstartdate by remember { mutableStateOf("")}
+    var selectedtenddate by remember { mutableStateOf("") }
+    var text2 by remember {
+        mutableStateOf("")
+    }
+    var text1 by remember {
+        mutableStateOf("")
+    }
     Box(modifier = Modifier
         .fillMaxSize()
         .background(white)) {
@@ -138,9 +152,7 @@ fun moadlbottomsheettask(navController: NavHostController){
             ) {
                 Column {
 
-                    var text1 by remember {
-                        mutableStateOf("")
-                    }
+
                     var assignto by remember {
                         mutableStateOf("")
                     }
@@ -161,9 +173,7 @@ fun moadlbottomsheettask(navController: NavHostController){
 
 
                     }
-                    var text2 by remember {
-                        mutableStateOf("")
-                    }
+
                     OutlinedTextField(
                         value = text1,
                         onValueChange = { text1 = it },
@@ -186,6 +196,8 @@ fun moadlbottomsheettask(navController: NavHostController){
                         label = { Text(text = "Title",  fontSize = 15.sp,
                             fontWeight = FontWeight.Bold) },
                     )
+
+
                     OutlinedTextField(value = text2,
                         onValueChange = { text2 = it },
                         modifier = Modifier
@@ -231,7 +243,6 @@ fun moadlbottomsheettask(navController: NavHostController){
                     var datePickerState = rememberDatePickerState()
                     var showDatePicker by remember { mutableStateOf(false) }
                     var calendercolour by remember { mutableStateOf(true) }
-                    var selectedstartdate by remember { mutableStateOf("") }
                     Card(
                         Modifier
                             .fillMaxWidth()
@@ -280,27 +291,20 @@ fun moadlbottomsheettask(navController: NavHostController){
                         val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                         if (showDatePicker) {
                             DatePickerDialog(onDismissRequest = { /*TODO*/ }, confirmButton = {
-                                TextButton(onClick =
-                                {
+                                TextButton(onClick = {
                                     showDatePicker = false
                                     val selectedDate = Calendar.getInstance().apply {
                                         timeInMillis = datePickerState.selectedDateMillis!!
                                     }
-                                    selectedstartdate =
-                                        "${dateFormatter.format(selectedDate.time)}"
-
+                                    selectedstartdate = dateFormatter.format(selectedDate.time)
                                 }) {
                                     Text(text = "OK")
                                 }
-
-                            },
-
-                                dismissButton = {
-                                    TextButton(onClick = { showDatePicker = false }) {
-                                        Text(text = "Cancel")
-                                    }
-
-                                }) {
+                            }, dismissButton = {
+                                TextButton(onClick = { showDatePicker = false }) {
+                                    Text(text = "Cancel")
+                                }
+                            }) {
                                 DatePicker(state = datePickerState)
                             }
 
@@ -310,7 +314,6 @@ fun moadlbottomsheettask(navController: NavHostController){
 
                     var datePickerState2 = rememberDatePickerState()
                     var showDatePickerEndDate by remember { mutableStateOf(false) }
-                    var selectedtenddate by remember { mutableStateOf("") }
                     var calendercolur2 by remember { mutableStateOf(true) }
                     Spacer(modifier = Modifier.height(25.dp))
                     Card(
@@ -360,24 +363,20 @@ fun moadlbottomsheettask(navController: NavHostController){
                         val dateFormatte = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                         if (showDatePickerEndDate) {
                             DatePickerDialog(onDismissRequest = { /*TODO*/ }, confirmButton = {
-                                TextButton(onClick =
-                                {
-                                    val SelectedDatee = Calendar.getInstance().apply {
-                                        timeInMillis = datePickerState.selectedDateMillis!!
+                                TextButton(onClick = {
+                                    val selectedDatee = Calendar.getInstance().apply {
+                                        timeInMillis = datePickerState2.selectedDateMillis!!
                                     }
-                                    selectedtenddate =
-                                        "${dateFormatte.format(SelectedDatee.time)}"
+                                    selectedtenddate = dateFormatte.format(selectedDatee.time)
                                     showDatePickerEndDate = false
                                 }) {
                                     Text(text = "OK")
                                 }
-                            },
-                                dismissButton = {
-                                    TextButton(onClick = { showDatePickerEndDate = false }) {
-                                        Text(text = "Cancel")
-                                    }
-
-                                }) {
+                            }, dismissButton = {
+                                TextButton(onClick = { showDatePickerEndDate = false }) {
+                                    Text(text = "Cancel")
+                                }
+                            }) {
                                 DatePicker(state = datePickerState2)
                             }
                         }
@@ -385,12 +384,68 @@ fun moadlbottomsheettask(navController: NavHostController){
                     Spacer(modifier = Modifier.height(25.dp))
                 }
             }
-
-
+         val  title =text1
+            val description=text2
+            val startDate =selectedstartdate
+            val endDate =selectedtenddate
+            val assignTo="662ff8199b7be17f55ed99f1"
+            val status= "done"
+val send =Sendtaskrequest(endDate,description,title,startDate,assignTo,status)
 
             Spacer(modifier = Modifier.height(32.dp))
             TextButton(
                 onClick = {
+ApiManger.getapiservices().creatretask(getToken(context),send).enqueue(object :retrofit2.Callback<Sendtaskrespond>{
+    override fun onResponse(p0: Call<Sendtaskrespond>, p1: Response<Sendtaskrespond>) {
+        val rspond = p1.body()
+        if (p1.isSuccessful && rspond != null) {
+
+            Log.e("tag", "onResponse: message: ${rspond.message}")
+
+
+            Log.e("tag", "onResponse: message: ${rspond.task}")
+        }
+        else {
+            hndelerror(p1)
+        }
+
+    }
+
+    private fun hndelerror(response:Response<Sendtaskrespond>) {
+        when (response.code()) {
+            401 -> {
+                // Handle Unauthorized - token may be invalid or expired
+                Log.e("tag", "onResponse: unauthorized, token might be expired or invalid")
+                // You can prompt the user to login again or refresh the token
+            }
+            429 -> {
+                // Handle Too Many Requests - rate limiting
+                Log.e("tag", "onResponse: too many requests, retry after some time")
+                // You can implement a retry mechanism with exponential backoff
+            }
+            400 -> {
+                // Handle Bad Request
+                val errorBody = response.errorBody()?.string()
+                Log.e("tag", "onResponse: bad request, error: $errorBody")
+            }
+            500 -> {
+                // Handle Internal Server Error
+                val errorBody = response.errorBody()?.string()
+                Log.e("tag", "onResponse: server error, error: $errorBody")
+            }
+            else -> {
+                // Handle other status codes
+                val errorBody = response.errorBody()?.string()
+                Log.e("tag", "onResponse: error, code: ${response.code()}, error: $errorBody")
+            }
+        }
+    }
+
+    override fun onFailure(p0: Call<Sendtaskrespond>, p1: Throwable) {
+        Log.e("tag", "onResponse: message: falier")
+    }
+})
+
 
 
                 }, modifier = Modifier

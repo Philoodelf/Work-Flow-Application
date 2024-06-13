@@ -51,12 +51,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.work_flowapplication.ui.location.location
+import com.example.work_flowapplication.ui.theme.AddEmployee
 import com.example.work_flowapplication.ui.theme.WorkFlowApplicationTheme
+import com.example.work_flowapplication.ui.theme.calender
+import com.example.work_flowapplication.ui.theme.editProfilePage
 import com.example.work_flowapplication.ui.theme.ll
-import com.example.work_flowapplication.ui.theme.navwitpadding
+import com.example.work_flowapplication.ui.theme.moadlbottomsheettask
 import kotlinx.coroutines.launch
 
 class HomeNav : AppCompatActivity() {
@@ -73,7 +78,6 @@ class HomeNav : AppCompatActivity() {
 
 
 
-
                 }
             }
         }
@@ -82,7 +86,9 @@ class HomeNav : AppCompatActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun buttonnav(navController: NavHostController= rememberNavController()) {
+fun buttonnav() {
+
+    val navigationController = rememberNavController()
     val scope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
@@ -94,7 +100,7 @@ fun buttonnav(navController: NavHostController= rememberNavController()) {
 
     Scaffold(
         topBar = {
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val navBackStackEntry by navigationController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
             if (currentRoute == Screens.Home.route ||
                 currentRoute == Screens.Requests.route ||
@@ -167,23 +173,42 @@ fun buttonnav(navController: NavHostController= rememberNavController()) {
         },
 
         bottomBar = {
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val navBackStackEntry by navigationController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
             if (currentRoute == Screens.Home.route ||
                 currentRoute == Screens.Requests.route ||
                 currentRoute==Screens.Report.route||
                 currentRoute==Screens.Profile.route||
                 currentRoute==Screens.Dashboard.route
+
                 ) {
-            bottombar(navController)}
+            bottombar(navigationController)}
 
         }
 
     )
 
     { paddingValues ->
+        NavHost(
+            navController = navigationController,
+            startDestination = Screens.Home.route,
+            modifier = Modifier.padding(paddingValues)
+        ) {
+            composable(route = Screens.Home.route){ Home()}
+            composable(route=Screens.Requests.route){ Request() }
+            composable(route=Screens.Dashboard.route){ Dashboard(navigationController)}
+            composable(route=Screens.Report.route){ com.example.work_flowapplication.Report() }
+            composable(route=Screens.Profile.route){ Profile() }
+            composable(route = Screens.SendAlert.route){ SendAlert(navigationController) }
+            composable(route = Screens.Search.route){ Search(navigationController) }
+            composable(route = Screens.Addemployee.route){ AddEmployee(navigationController) }
+            composable(route = Screens.Editeployee.route){ editProfilePage(navigationController) }
+            composable(route = Screens.Timetrack.route){ calender(navigationController) }
+            composable(route = Screens.CreateTask.route){ moadlbottomsheettask(navigationController) }
+            composable(route = Screens.location.route){ location(navigationController) }
 
-       navwitpadding(navController,modifier = Modifier.padding(paddingValues))
+        }
+      /* navwitpadding(navController,modifier = Modifier.padding(paddingValues))*/
 
     }}
 @Composable
