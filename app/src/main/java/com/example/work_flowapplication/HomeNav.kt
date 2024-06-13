@@ -4,17 +4,21 @@ package com.example.work_flowapplication
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,6 +29,7 @@ import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -48,16 +53,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.work_flowapplication.ui.theme.WorkFlowApplicationTheme
-import com.example.work_flowapplication.ui.theme.editProfilePage
 import com.example.work_flowapplication.ui.theme.ll
+import com.example.work_flowapplication.ui.theme.navwitpadding
 import kotlinx.coroutines.launch
 
 class HomeNav : AppCompatActivity() {
@@ -71,8 +75,8 @@ class HomeNav : AppCompatActivity() {
                     color = MaterialTheme.colorScheme.background
 
                 ) {
-                    Greeting("Android")
-                    buttonnav(this)
+
+
 
 
                 }
@@ -81,36 +85,57 @@ class HomeNav : AppCompatActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun buttonnav(context1: AppCompatActivity) {
-    val scope = rememberCoroutineScope()
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
- val navigationController = rememberNavController()
+fun buttonnav(navController: NavHostController= rememberNavController()) {
+   // val scope = rememberCoroutineScope()
+ //  val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+
     var title=""
     val context = LocalContext.current.applicationContext
 //    val selected = remember {
 //        mutableStateOf(Icons.Default.Home)
 //    }
-    var selected by remember {
-        mutableStateOf("home")
-    }
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet {
+                Text("Settings ", modifier = Modifier.padding(16.dp))
+                Divider()
+               // NavigationDrawerItem(
+                  //  label = { Text(text = "Drawer Item") },
+               //     selected = false,
+             //       onClick = { /*TODO*/ }
+              //  )
+                // ...other drawer items
+                Column {
+                    // Text(text = "Settings", Modifier.padding(16.dp))
+
+                    Row {
+                        Text(text = "Logout", Modifier.padding(16.dp))
+                    }
+                    Row {
+                        Text(text = "Change Password", Modifier.padding(16.dp))
+                    }
+                }
+
+            }
+        },
+    ) {
+
     Scaffold(
-
         topBar = {
-
-
-            val navBackStackEntry by navigationController.currentBackStackEntryAsState()
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
+            if (currentRoute == Screens.Home.route ||
+                currentRoute == Screens.Requests.route ||
+                currentRoute==Screens.Report.route||
+                currentRoute==Screens.Profile.route||
+                currentRoute==Screens.Dashboard.route
+            ) {
+
             val title = remember { mutableStateOf("Home") }
 
             when (currentRoute) {
@@ -144,8 +169,10 @@ fun buttonnav(context1: AppCompatActivity) {
                     //menu
 
                     IconButton(onClick = {
-                       scope.launch {
-                            drawerState.open()
+                        scope.launch {
+                            drawerState.apply {
+                                if (isClosed) open() else close()
+                            }
                         }
                        // drawer()
                     }) {
@@ -171,319 +198,232 @@ fun buttonnav(context1: AppCompatActivity) {
 
                 }
 
-                )
+                )}
         },
 
-//        bottomBar ={
-//        BottomAppBar(containerColor = Color(0xFF029DF0), modifier = Modifier
-//            .padding(horizontal = 5.dp)
-//            .clip(shape = RoundedCornerShape(16.dp)),
-//
-//        ){
-//        bottomBar = {
-//
-//            NavigationBar(containerColor = Color.White) {
-//                val iconcolour=Color(0xFF1E7DFF)
-//
-//
-//
-//                    }
-//            // Home
-//            IconButton(onClick = {
-//                selected.value=Icons.Default.Home
-//                navigationController.navigate(Screens.Home.route){
-//                    popUpTo(0)
-//                }
-//            },
-//                modifier = Modifier
-//                 //   .weight(1f)
-//                ) {
-//                Icon( Icons.Default.Home , contentDescription = null, modifier = Modifier.size(32.dp),
-//
-//                   tint = if(selected.value== Icons.Default.Home) Color.White else Color(0xFF016DA8))
-//                    Text(text = "Home", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
-//            }
-//                //Requests
-//            IconButton(onClick = {
-//                selected.value=Icons.Default.Star
-//                navigationController.navigate(Screens.Requests.route){
-//                    popUpTo(0)
-//                }
-//            },
-//           //     modifier = Modifier.weight(1f)
-//            ) {
-//               // Icon(imageVector = R.drawable., contentDescription =null )
-//                Image(
-//                    painter = painterResource(id = R.drawable.requests), contentDescription = null, modifier = Modifier.size(32.dp),
-//                   colorFilter = ColorFilter.tint( if(selected.value== Icons.Default.Star) Color.White else Color(0xFF016DA8)))
-//                Text(text = "Request", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
-//
-//            }
-//               //Dashboard
-//            IconButton(onClick = {
-//                selected.value=Icons.Default.DateRange
-//                navigationController.navigate(Screens.Dashboard.route){
-//                    popUpTo(0)
-//                }
-//            },
-//              //  modifier = Modifier.weight(1f)
-//            ) {
-//                Image(
-//                    painter = painterResource(id = R.drawable.dashboard), contentDescription = null, modifier = Modifier.size(32.dp),
-//                    colorFilter = ColorFilter.tint(if(selected.value== Icons.Default.DateRange) Color.White else Color(0xFF016DA8)))
-//                Text(text = "Dashboard", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
-//
-//
-//            }
-//            //Report
-//            IconButton(onClick = {
-//                selected.value=Icons.Default.Warning
-//                navigationController.navigate(Screens.Report.route){
-//                    popUpTo(0)
-//                }
-//            },
-//              //  modifier = Modifier.weight(1f)
-//            ) {
-//                Image(
-//                    painter = painterResource(id = R.drawable.report), contentDescription = null, modifier = Modifier.size(32.dp),
-//                    colorFilter = ColorFilter.tint(if(selected.value== Icons.Default.Warning) Color.White else Color(0xFF016DA8)))
-//                Text(text = "Report", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
-//
-//
-//            }
-//            // profile
-//            IconButton(onClick = {
-//                selected.value=Icons.Default.AccountCircle
-//                navigationController.navigate(Screens.Profile.route){
-//                    popUpTo(0)
-//                }
-//            },
-//              //  modifier = Modifier.weight(1f)
-//            ) {
-//
-//               // Icon( Icons.Default.AccountCircle ,
-//                Image(
-//                    painter = painterResource(id = R.drawable.profile), contentDescription = null, modifier = Modifier.size(32.dp),
-//                    colorFilter = ColorFilter.tint(if(selected.value== Icons.Default.AccountCircle) Color.White else Color(0xFF016DA8)))
-//                Text(text = "Profile", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
-//
-//
-//            }
-//
-//
-//
-//
-//    } ) {
-
         bottomBar = {
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.destination?.route
+            if (currentRoute == Screens.Home.route ||
+                currentRoute == Screens.Requests.route ||
+                currentRoute==Screens.Report.route||
+                currentRoute==Screens.Profile.route||
+                currentRoute==Screens.Dashboard.route
+                ) {
+            bottombar(navController)}
 
-            NavigationBar(containerColor = Color.White) {
-                val iconcolour = Color(0xFF1E7DFF)
-
-                NavigationBarItem(selected = selected == "home",
-                    onClick = {
-                        selected = "home"
-                        navigationController.navigate(Screens.Home.route) {
-
-                        }
-                    },
-                    icon = {
-
-
-                        /*if (selected == "home") {
-                            Box(
-                                modifier = Modifier
-                                    .width(48.dp)
-                                     // Align to top
-
-                            ) {
-                            Divider(
-                                color = red,
-                                thickness = 8.dp,
-                                modifier = Modifier.width(50.dp)
-                                    .clip( shape = RoundedCornerShape(bottomEnd = 10.dp, bottomStart = 10.dp))
-                                // Align to bottom
-                            )}
-                        }*/
-
-                        Icon(
-                            painter = painterResource(R.drawable.home_logo),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .size(25.dp),
-                            tint = if (selected == "home") Color(0xFF1E7DFF) else ll
-                        )
-
-
-                    }, colors = androidx.compose.material3.NavigationBarItemDefaults.colors(
-
-                        indicatorColor = Color.White
-                    ), label = {
-                        Text(
-                            text = "Home",
-                            color = if (selected == "home") iconcolour else ll, fontSize = 10.sp
-                        )
-                    }, modifier = Modifier.weight(1f)
-
-
-                )
-                NavigationBarItem(selected = selected == "request",
-                    onClick = {
-                        selected = "request"
-                        navigationController.navigate(Screens.Requests.route) {
-                            popUpTo(0)
-                        }
-
-                    },
-                    icon = {
-                        Icon(
-                            painter = painterResource(R.drawable.requests),
-                            contentDescription = "",
-                            modifier = Modifier.size(25.dp),
-
-
-                            tint = if (selected == "request") iconcolour else ll
-                        )
-                    }, colors = androidx.compose.material3.NavigationBarItemDefaults.colors(
-
-                        indicatorColor = Color.White
-                    ),
-
-                    label = {
-                        Text(
-                            text = "Request",
-                            color = if (selected == "request") iconcolour else ll, fontSize = 10.sp
-                        )
-                    }, modifier = Modifier.weight(1f))
-
-
-                NavigationBarItem(selected = selected == "Dashboard",
-                    onClick = {
-                        selected = "Dashboard"
-                        navigationController.navigate(Screens.Dashboard.route) {
-                            popUpTo(0)
-                        }
-
-                    },
-                    icon = {
-                        Icon(
-                            painter = painterResource(R.drawable.dashboard),
-                            contentDescription = "",
-                            modifier = Modifier.size(25.dp),
-                            tint = if (selected == "Dashboard") iconcolour else ll
-                        )
-                    }, colors = androidx.compose.material3.NavigationBarItemDefaults.colors(
-
-                        indicatorColor = Color.White
-                    ), label = {
-                        Text(
-                            text = "Dashboard",
-                            color = if (selected == "Dashboard") iconcolour else ll ,
-                             fontSize = 10.sp,
-                            maxLines = 1
-
-                        )
-                    }, modifier = Modifier.weight(1f))
-
-
-                NavigationBarItem(selected = selected == "Report",
-                    onClick = {
-
-
-                        selected = "Report"
-                        navigationController.navigate(Screens.Report.route) {
-                            popUpTo(0)
-                        }
-                    },
-                    icon = {
-                        Icon(
-                            painter = painterResource(R.drawable.report),
-                            contentDescription = "",
-                            modifier = Modifier.size(25.dp),
-                            tint = if (selected == "Report") iconcolour else ll
-                        )
-                    }, colors = androidx.compose.material3.NavigationBarItemDefaults.colors(
-
-                        indicatorColor = Color.White
-                    ), label = {
-                        Text(
-                            text = "Report",
-                            color = if (selected == "Report") iconcolour else ll, fontSize = 10.sp
-                        )
-                    }, modifier = Modifier.weight(1f))
-
-
-                NavigationBarItem(selected = selected == "Profile",
-                    onClick = {
-                        selected = "Profile"
-                        navigationController.navigate(Screens.Profile.route) {
-                            popUpTo(0)
-                        }
-
-                    },
-                    icon = {
-                        Icon(
-                            painter = painterResource(R.drawable.profile),
-                            contentDescription = "",
-                            modifier = Modifier.size(25.dp),
-                            tint = if (selected == "Profile") iconcolour else ll
-                        )
-                    }, colors = androidx.compose.material3.NavigationBarItemDefaults.colors(
-
-                        indicatorColor = Color.White
-                    ), label = {
-                        Text(
-                            text = "Profile",
-                            color = if (selected == "Profile") iconcolour else ll, fontSize = 10.sp
-                        )
-                    }, modifier = Modifier.weight(1f))
-
-            }
         }
 
     )
+
     { paddingValues ->
-        NavHost(
-            navController = navigationController,
-            startDestination = Screens.Home.route,
-            modifier = Modifier.padding(paddingValues)
-        ) {
-            composable(Screens.Home.route) { Home() }
-            composable(Screens.Requests.route) { Request() }
-            composable(Screens.Dashboard.route) { Dashboard(navController = navigationController) }
-            composable(Screens.Report.route) { Report() }
-            composable(Screens.Profile.route) { Profile(navController = navigationController) }
-            composable(Screens.SendAlert.route) {
-                SendAlert(
-                    // navController = navigationController
-                    navController = navigationController
-                )
-            }
-            composable(Screens.Search.route) { Search(navController = navigationController) }
 
-        }
-    }}
+       navwitpadding(navController,modifier = Modifier.padding(paddingValues))
 
+    }}}
+@Composable
+fun bottombar (navController: NavController){
+    var selected by remember {
+        mutableStateOf("home")
+    }
+    NavigationBar(containerColor = Color.White) {
+        val iconcolour = Color(0xFF1E7DFF)
 
+        NavigationBarItem(selected = selected == "home",
+            onClick = {
+                selected = "home"
+                navController.navigate(Screens.Home.route) {
 
-                @Preview(showBackground = true)
-                @Composable
-                fun GreetingPreview3() {
-                    WorkFlowApplicationTheme {
-                        Greeting("Android")
-
-
-                    }
                 }
+            },
+            icon = {
+
+                Icon(
+                    painter = painterResource(R.drawable.home_logo),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(25.dp),
+                    tint = if (selected == "home") Color(0xFF1E7DFF) else ll
+                )
+
+
+            }, colors = androidx.compose.material3.NavigationBarItemDefaults.colors(
+
+                indicatorColor = Color.White
+            ), label = {
+                Text(
+                    text = "Home",
+                    color = if (selected == "home") iconcolour else ll, fontSize = 10.sp
+                )
+            }, modifier = Modifier.weight(1f)
+
+
+        )
+        NavigationBarItem(selected = selected == "request",
+            onClick = {
+                selected = "request"
+                navController.navigate(Screens.Requests.route) {
+                    popUpTo(0)
+                }
+
+            },
+            icon = {
+                Icon(
+                    painter = painterResource(R.drawable.requests),
+                    contentDescription = "",
+                    modifier = Modifier.size(25.dp),
+
+
+                    tint = if (selected == "request") iconcolour else ll
+                )
+            }, colors = androidx.compose.material3.NavigationBarItemDefaults.colors(
+
+                indicatorColor = Color.White
+            ),
+
+            label = {
+                Text(
+                    text = "Request",
+                    color = if (selected == "request") iconcolour else ll, fontSize = 10.sp
+                )
+            }, modifier = Modifier.weight(1f))
+
+
+        NavigationBarItem(selected = selected == "Dashboard",
+            onClick = {
+                selected = "Dashboard"
+                navController.navigate(Screens.Dashboard.route) {
+                    popUpTo(0)
+                }
+
+            },
+            icon = {
+                Icon(
+                    painter = painterResource(R.drawable.dashboard),
+                    contentDescription = "",
+                    modifier = Modifier.size(25.dp),
+                    tint = if (selected == "Dashboard") iconcolour else ll
+                )
+            }, colors = androidx.compose.material3.NavigationBarItemDefaults.colors(
+
+                indicatorColor = Color.White
+            ), label = {
+                Text(
+                    text = "Dashboard",
+                    color = if (selected == "Dashboard") iconcolour else ll ,
+                    fontSize = 10.sp,
+                    maxLines = 1
+
+                )
+            }, modifier = Modifier.weight(1f))
+
+
+        NavigationBarItem(selected = selected == "Report",
+            onClick = {
+
+
+                selected = "Report"
+                navController.navigate(Screens.Report.route) {
+                    popUpTo(0)
+                }
+            },
+            icon = {
+                Icon(
+                    painter = painterResource(R.drawable.report),
+                    contentDescription = "",
+                    modifier = Modifier.size(25.dp),
+                    tint = if (selected == "Report") iconcolour else ll
+                )
+            }, colors = androidx.compose.material3.NavigationBarItemDefaults.colors(
+
+                indicatorColor = Color.White
+            ), label = {
+                Text(
+                    text = "Report",
+                    color = if (selected == "Report") iconcolour else ll, fontSize = 10.sp
+                )
+            }, modifier = Modifier.weight(1f))
+
+
+        NavigationBarItem(selected = selected == "Profile",
+            onClick = {
+                selected = "Profile"
+                navController.navigate(Screens.Profile.route) {
+                    popUpTo(0)
+                }
+
+            },
+            icon = {
+                Icon(
+                    painter = painterResource(R.drawable.profile),
+                    contentDescription = "",
+                    modifier = Modifier.size(25.dp),
+                    tint = if (selected == "Profile") iconcolour else ll
+                )
+            }, colors = androidx.compose.material3.NavigationBarItemDefaults.colors(
+
+                indicatorColor = Color.White
+            ), label = {
+                Text(
+                    text = "Profile",
+                    color = if (selected == "Profile") iconcolour else ll, fontSize = 10.sp
+                )
+            }, modifier = Modifier.weight(1f))
+
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun drawer(drawerState: DrawerState) {
-
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    ModalNavigationDrawer(drawerContent = {
+    ModalNavigationDrawer(
+        drawerContent = {
+            ModalDrawerSheet {
+                Text("Drawer title", modifier = Modifier.padding(16.dp))
+                Divider()
+                NavigationDrawerItem(
+                    label = { Text(text = "Drawer Item") },
+                    selected = false,
+                    onClick = { /*TODO*/ }
+                )
+                // ...other drawer items
+            }
+        }
+    ) {
+        // Screen content
+        Column {
+            Text(text = "Settings", Modifier.padding(16.dp))
+
+            Row {
+                Text(text = "Logout", Modifier.padding(16.dp))
+            }
+            Row {
+                Text(text = "Change Password", Modifier.padding(16.dp))
+            }
+        }
+    }
+
+
+
+
+  //  val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+   // val scope = rememberCoroutineScope()
+    ModalNavigationDrawer(
+        drawerContent = {
         ModalDrawerSheet {
+            Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(Color.White),
+                    contentAlignment = Alignment.Center
+                ){
+
+                }
+
 
             Column {
                 Text(text = "Settings", Modifier.padding(16.dp))
@@ -495,6 +435,7 @@ fun drawer(drawerState: DrawerState) {
                     Text(text = "Change Password", Modifier.padding(16.dp))
                 }
             }
+        }
         }
     }, drawerState = drawerState) {
 

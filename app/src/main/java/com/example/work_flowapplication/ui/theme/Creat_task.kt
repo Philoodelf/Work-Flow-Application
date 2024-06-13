@@ -54,10 +54,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.navigation.NavHostController
 import com.example.work_flowapplication.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -67,7 +67,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun moadlbottomsheettask(){
+fun moadlbottomsheettask(navController: NavHostController){
     var imageid = arrayOf(
 
         R.drawable.personimage,
@@ -621,12 +621,6 @@ fun LargeDropdownMenuItem(
     }
 }
 
-@Composable
 
-@Preview
-fun creattaskpreview(){
-    moadlbottomsheettask()
-
-}
 
 

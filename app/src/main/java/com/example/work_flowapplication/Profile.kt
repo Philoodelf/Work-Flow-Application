@@ -34,66 +34,56 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.work_flowapplication.ui.theme.Screen_employee
+import com.example.work_flowapplication.ui.theme.graycolour
 
 @Composable
-fun Profile(navController: NavController) {
+fun Profile(modifier :Modifier) {
+    Box(modifier.background(graycolour)){
+    ElevatedCard(
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 6.dp
+        ),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(18.dp),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(Color.White)
+    ) {
 
-    Box(Modifier.background(Color.White)) {
-//    Box(modifier = Modifier.fillMaxSize()){
-//        Column(modifier = Modifier
-//            .fillMaxSize()
-//            .align(Alignment.Center),
-//            verticalArrangement = Arrangement.Center,
-//            horizontalAlignment = Alignment.CenterHorizontally
-//
-//        ) {
-//          //  Text(text = "Profile", fontSize = 30.sp)
-//        }
-//    }
-
-        ElevatedCard(
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 6.dp
-            ),
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(18.dp),
-            shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(Color.White)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
+            //profile
+            Box() {
+                Image(
+                    painter = painterResource(id = R.drawable.proprofile),
+                    contentDescription = "des",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(100.dp)
+                        .align(Alignment.Center)
+                        .clip(RoundedCornerShape(16.dp))
+                        .padding(start = 15.dp, top = 15.dp)
+                )
+            }
 
-            Row( modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically) {
-                //profile
-                Box() {
-                    Image(
-                        painter = painterResource(id = R.drawable.proprofile),
-                        contentDescription = "des",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .size(100.dp)
-                            .align(Alignment.Center)
-                            .clip(RoundedCornerShape(16.dp))
-                            .padding(start = 15.dp, top = 15.dp)
-                    )
-                }
-                Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.weight(1f))
 
-                IconButton(
-                    onClick = {  navController.navigate(Screen_employee.editemployee.route)},
-                    modifier = Modifier.padding(end = 15.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Edit,
-                        contentDescription = "End Icon",
-                        modifier = Modifier
-                            .size(40.dp) // Adjust the size as needed
-                            .padding(end = 15.dp,)
-                    )
-                }
+            IconButton(
+                onClick = { },
+                modifier = Modifier.padding(end = 15.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "End Icon",
+                    modifier = Modifier
+                        .size(40.dp) // Adjust the size as needed
+                        .padding(end = 15.dp,)
+                )
+            }
             }
             Column(modifier = Modifier) {
 
@@ -121,7 +111,7 @@ fun Profile(navController: NavController) {
                         modifier = Modifier
                             .padding(start = 16.dp, top = 7.dp),
                         textAlign = TextAlign.Center,
-                        color = Color.Black,
+                        color = Color.Black
                     )
                 }
 
@@ -151,7 +141,8 @@ fun Profile(navController: NavController) {
                         modifier = Modifier
                             .padding(start = 16.dp, top = 7.dp),
                         textAlign = TextAlign.Center,
-                        color = Color.Black,
+                        color = Color.Black
+
                     )
                 }
 
@@ -179,7 +170,8 @@ fun Profile(navController: NavController) {
                         modifier = Modifier
                             .padding(start = 16.dp, top = 7.dp),
                         textAlign = TextAlign.Center,
-                        color = Color.Black,
+                        color = Color.Black
+
                     )
                 }
 
@@ -207,7 +199,8 @@ fun Profile(navController: NavController) {
                         modifier = Modifier
                             .padding(start = 16.dp, top = 4.dp),
                         textAlign = TextAlign.Center,
-                        color = Color.Black,
+                        color = Color.Black
+
                     )
                 }
 
@@ -262,5 +255,4 @@ fun Profile(navController: NavController) {
         }
 
 
-    }
-}
+    }}

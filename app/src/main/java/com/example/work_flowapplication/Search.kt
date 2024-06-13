@@ -1,15 +1,15 @@
 package com.example.work_flowapplication
 
 import android.graphics.drawable.Drawable
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,18 +18,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberDrawerState
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,16 +41,30 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
+import com.example.work_flowapplication.ui.api.ApiManger
+import com.example.work_flowapplication.ui.api.Searchname
+import retrofit2.Call
+import retrofit2.Response
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TextFieldDefaults
 
 
 @Composable
-fun Search(  navController: NavHostController
+fun Search(  navController: NavHostController, modifier: Modifier
 ) {
+
+    val textstate = remember {
+        mutableStateOf(TextFieldValue(""))
+    }
+
+    val searchtext =textstate.value.text
+
     Box(Modifier.background(Color.White)) {
 //    TextButton(onClick = { navController.popBackStack() },) {
 //        Icon(
@@ -73,28 +84,111 @@ fun Search(  navController: NavHostController
                 modifier = Modifier.padding(start = 12.dp, top = 4.dp, end = 16.dp),
                 contentAlignment = Alignment.Center
             ) {
-                searchbar()
+             //   searchbar()
+                Searchview(state = textstate, placeholder ="Search here... ", modifier = modifier)
             }
 
-            employye()
+            employye(searchtext = searchtext)
         }
     }
 }
 
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun employye() {
+fun Searchview(state: MutableState<TextFieldValue>, placeholder: String, modifier: Modifier = Modifier) {
+
+
+
+
+    TextField(
+        value = state.value,
+        onValueChange = { value ->
+            state.value = value
+        },
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(start = 12.dp, top = 20.dp, end = 8.dp, bottom = 12.dp)
+            .clip(RoundedCornerShape(25.dp))
+            .border(2.dp, Color.DarkGray, RoundedCornerShape(30.dp)),
+        placeholder = {
+            Text(placeholder)
+        },
+        maxLines = 1,
+        singleLine = true,
+        textStyle = TextStyle(
+            color = Color.Black, fontSize = 20.sp
+        ),
+        colors = TextFieldDefaults.textFieldColors(
+            containerColor = Color.White
+        )
+
+    )
+
+    //{
+//        Row(verticalAlignment = Alignment.CenterVertically) {
+//
+//            // Search icon
+//            Box(
+//                modifier = Modifier
+//                    .padding(start = 8.dp)
+//                    .clickable {
+//                        ApiManger
+//                            .getapiservices()
+//                            .searchn("philo")
+//                            .enqueue(object : retrofit2.Callback<Searchname> {
+//
+//                                override fun onResponse(
+//                                    p0: Call<Searchname>,
+//                                    p1: Response<Searchname>
+//                                ) {
+//                                    val body = p1.body()
+//                                    if (p1.isSuccessful && body != null) {
+//                                    }
+//                                    Log.e("tag", "onResponse: yep, token: ${body?.message}")
+//                                    Log.e("tag", "onResponse: yes, token: ${body?.result}")
+//                                }
+//
+//                                override fun onFailure(p0: Call<Searchname>, p1: Throwable) {
+//                                    Log.e("tag", "onResponse: fail search")
+//                                }
+//                            })
+//                    } // Make the icon clickable
+//            ) {
+//                Icon(
+//                    imageVector = Icons.Default.Search,
+//                    contentDescription = "Search",
+//                    tint = Color.Black.copy(alpha = 0.5f), // Make the icon transparent
+//                    modifier = Modifier.padding(start = 8.dp)
+//                )}
+//    }
+  //  }
+
+
+}
+
+
+
+@Composable
+fun employye(searchtext:String) {
     val context = LocalContext.current.applicationContext
     val items= listOf(
-        employeeItem("Jane Hawkins", "front end developer", ContextCompat.getDrawable(context, R.drawable.reportprofile)!!),
-        employeeItem("Brooklen Semoons", "back end developer",ContextCompat.getDrawable(context, R.drawable.proprofile)!!),
-        employeeItem("Leslie Alexander", "mobile developer developer",ContextCompat.getDrawable(context, R.drawable.requestprofile)!!),
-        employeeItem("cristaion ronaldo", "full stak developer",ContextCompat.getDrawable(context, R.drawable.requestprofile)!!),
-        employeeItem("cristaion ronaldo", "full stak developer",ContextCompat.getDrawable(context, R.drawable.requestprofile)!!),
-        employeeItem("cristaion ronaldo", "full stak developer",ContextCompat.getDrawable(context, R.drawable.requestprofile)!!),
-        employeeItem("cristaion ronaldo", "full stak developer",ContextCompat.getDrawable(context, R.drawable.requestprofile)!!),
+        employeeItem("Jane Hawkins", "front end developer", R.drawable.reportprofile!!),
+        employeeItem("Brooklen Semoons", "back end developer", R.drawable.proprofile!!),
+        employeeItem("Leslie Alexander", "mobile developer", R.drawable.requestprofile!!),
+        employeeItem("Philopater Odolf", "mobile developer", R.drawable.philo!!),
+        employeeItem("Michael Magdy", "full stak developer",R.drawable.michael!!),
+        employeeItem("Esmail Farid", "full stak developer", R.drawable.esmail!!),
+        employeeItem("cristaion ronaldo", "full stak developer", R.drawable.requestprofile!!),
+        employeeItem("cristaion ronaldo", "full stak developer",R.drawable.requestprofile!!),
     )
+    val filteredItems = items.filter {
+        it.name.contains(searchtext, ignoreCase = true) ||
+                it.job.contains(searchtext,
+                    ignoreCase = true) }
+
     LazyColumn(){
-        items(items){
+        items(items = filteredItems){
                 (name, job, profile ) ->
     ElevatedCard(elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
         modifier = Modifier
@@ -105,8 +199,8 @@ fun employye() {
         //image + name + job
         Row(modifier = Modifier) {
             Image(
-                painter = painterResource(id = R.drawable.requestprofile),
-                contentDescription = "des",
+                painter = painterResource(id = profile),
+                contentDescription = "Profile Picture",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(60.dp)
@@ -132,6 +226,7 @@ fun searchbar(modifier: Modifier = Modifier,
         mutableStateOf("")
     }
 
+
     var isHintDisplayed by remember {
         mutableStateOf(hint != "")
     }
@@ -149,12 +244,38 @@ fun searchbar(modifier: Modifier = Modifier,
             Row(verticalAlignment = Alignment.CenterVertically) {
 
                 // Search icon
+                Box(
+                    modifier = Modifier
+                        .padding(start = 8.dp)
+                        .clickable {
+                            ApiManger
+                                .getapiservices()
+                                .searchn("philo")
+                                .enqueue(object : retrofit2.Callback<Searchname> {
+
+                                    override fun onResponse(
+                                        p0: Call<Searchname>,
+                                        p1: Response<Searchname>
+                                    ) {
+                                        val body = p1.body()
+                                        if (p1.isSuccessful && body != null) {
+                                        }
+                                        Log.e("tag", "onResponse: yep, token: ${body?.message}")
+                                        Log.e("tag", "onResponse: yes, token: ${body?.result}")
+                                    }
+
+                                    override fun onFailure(p0: Call<Searchname>, p1: Throwable) {
+                                        Log.e("tag", "onResponse: fail search")
+                                    }
+                                })
+                        } // Make the icon clickable
+                ) {
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = "Search",
                     tint = Color.Black.copy(alpha = 0.5f), // Make the icon transparent
                     modifier = Modifier.padding(start = 8.dp)
-                )
+                )}
                 BasicTextField(
                     value = searchInput,
                     onValueChange = {
@@ -192,6 +313,6 @@ fun searchbar(modifier: Modifier = Modifier,
 data class employeeItem(
     val name: String,
     val job: String,
-    val profile: Drawable,
+    val profile: Int,
 
     )

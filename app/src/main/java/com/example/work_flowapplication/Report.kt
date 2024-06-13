@@ -3,7 +3,6 @@ package com.example.work_flowapplication
 
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,8 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun Report() {
-    Box(Modifier.background(Color.White)) {
+fun Report( modifier :Modifier) {
 //    Box(modifier = Modifier.fillMaxSize()){
 //        Column(modifier = Modifier
 //            .fillMaxSize()
@@ -41,7 +39,7 @@ fun Report() {
 //          //  Text(text = "Report", fontSize = 30.sp)
 //        }
 //    }
-    Column {
+    Column(modifier) {
         //first card
         Row {
             Image(
@@ -224,7 +222,7 @@ fun Report() {
                     /*to do */
                 },
             colors = CardDefaults.cardColors(Color.White)
-        ) {
+        ){
             Text(
                 text = "Attendance",
                 fontWeight = FontWeight.SemiBold,
@@ -246,6 +244,6 @@ fun Report() {
         }
 
 
-    }
+
     }
 }

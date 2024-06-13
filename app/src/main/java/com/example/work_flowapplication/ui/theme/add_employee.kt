@@ -1,5 +1,6 @@
 package com.example.work_flowapplication.ui.theme
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -14,6 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -35,12 +38,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavHostController
 import com.example.work_flowapplication.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -48,7 +52,9 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddEmployee() {
+fun AddEmployee(navController: NavHostController) {
+    val context = LocalContext.current.applicationContext
+
 
     Column(
         modifier = Modifier
@@ -63,7 +69,7 @@ fun AddEmployee() {
                 .background(bluecolour)
         ) {
             val (topImg, profile, title, back, pen) = createRefs()
-            Image(painter = painterResource(id = R.drawable.personimage), contentDescription = "",
+            Image(painter = painterResource(id = R.drawable.proprofile), contentDescription = "",
                 Modifier
                     .fillMaxWidth()
                     .height(130.dp)
@@ -84,16 +90,18 @@ fun AddEmployee() {
                     end.linkTo(parent.end)
                 }
             )
-            Icon(
-                painter = painterResource(id = R.drawable.profile_arrow),
-                contentDescription = "",
-                Modifier
-                    .size(32.dp)
-                    .constrainAs(back) {
-                        top.linkTo(parent.top, margin = 16.dp)
-                        start.linkTo(parent.start, margin = 20.dp)
-                    }, tint = white
-            )
+            TextButton(onClick = { navController.popBackStack() },) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    tint = Color.White,
+                    contentDescription = "Back",
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                        .size(25.dp)
+
+                )
+            }
+
 
         }
         Column {
@@ -288,28 +296,15 @@ fun AddEmployee() {
                 }
             }
         }
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         Row (){
-            TextButton(
-                onClick = {}, modifier = Modifier
-                    .width(150.dp)
-                    .height(60.dp)
-                    .clip(RoundedCornerShape(1.dp)),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF7F74))
-            ) {
 
-                Text(
-                    text = "Cancel",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = white
-                )
 
-            }
-            Spacer(modifier = Modifier.width(50.dp))
         TextButton(
             onClick = {
-
+                Toast
+                    .makeText(context, "User Created", Toast.LENGTH_SHORT)
+                    .show()
 
             }, modifier = Modifier
                 .width(150.dp)
@@ -326,19 +321,29 @@ fun AddEmployee() {
             )
 
         }
+            Spacer(modifier = Modifier.width(50.dp))
+            TextButton(
+                onClick = {}, modifier = Modifier
+                    .width(150.dp)
+                    .height(60.dp)
+                    .clip(RoundedCornerShape(1.dp)),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF7F74))
+            ) {
+
+                Text(
+                    text = "Cancel",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = white
+                )
+
+            }
       }
     }
 
 
 
-
-
 }
 
-@Preview(showBackground = true)
-@Composable
-fun AddEmployeePreview() {
-    AddEmployee()
-}
 
 

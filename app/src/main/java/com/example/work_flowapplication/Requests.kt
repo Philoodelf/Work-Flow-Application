@@ -1,12 +1,8 @@
 package com.example.work_flowapplication
 
-import android.graphics.drawable.Icon
-import android.icu.util.Calendar.WeekData
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,11 +16,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.icons.rounded.DateRange
 import androidx.compose.material.icons.rounded.List
 import androidx.compose.material3.Card
@@ -37,21 +28,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.work_flowapplication.ui.theme.graycolour
 
 @Composable
-fun Request() {
-    Box(Modifier.background(Color.White)) {
-        var title = ""
-        title = Screens.Requests.route.toString()
+fun Request( modifier: Modifier) {
+    var title =""
+    title = Screens.Requests.route.toString()
 //    Box(modifier = Modifier.fillMaxSize()){
 //        Column(modifier = Modifier
 //            .fillMaxSize()
@@ -65,71 +52,26 @@ fun Request() {
 //        }
 //    }
 
-        val items = listOf(
-            RequestItem(
-                "Davina Cornish",
-                "Programmer",
-                "1 Day",
-                "Sick",
-                " Wed 17 June",
-                " to ",
-                " Wed 17 June",
-                "Sick"
-            ),
-            RequestItem(
-                "Sam Dino",
-                "Front-End",
-                "Swap",
-                "",
-                " Thur 18 June",
-                " to ",
-                " Thur 18 June",
-                "Swap"
-            ),
-            RequestItem(
-                "Mark Scot",
-                "Back-End",
-                "2 Days",
-                "Vacation",
-                " Fri 19 June",
-                " to ",
-                " Sun 20 June",
-                "Vacation Leave"
-            ),
-            RequestItem(
-                "Mario Guy",
-                "Flutter-Developer",
-                "1 Week",
-                "Injured",
-                " Sat 10 June",
-                " to ",
-                " Sat 17 June",
-                "Car Accident"
-            ),
-            RequestItem(
-                "Peter Patrick",
-                "Sales",
-                "1 Day",
-                "Fest",
-                " Mon 12 June",
-                " to ",
-                " Mon 12 June",
-                "Day Off"
-            ),
-        )
-        LazyColumn() {
-            items(items) {
+    val items= listOf(
+        RequestItem("Davina Cornish", "Programmer", "1 Day", "Sick"," Wed 17 June"," to "," Wed 17 June","Sick"),
+        RequestItem("Sam Dino", "Front-End", "Swap", ""," Thur 18 June"," to "," Thur 18 June","Swap"),
+        RequestItem("Mark Scot", "Back-End", "2 Days", "Vacation"," Fri 19 June"," to "," Sun 20 June","Vacation Leave"),
+        RequestItem("Mario Guy", "Flutter-Developer", "1 Week", "Injured"," Sat 10 June"," to "," Sat 17 June","Car Accident"),
+        RequestItem("Peter Patrick", "Sales", "1 Day", "Fest"," Mon 12 June"," to "," Mon 12 June","Day Off"),
+    )
 
-                    (name, job, info1, info2, time1, to, time2, conditionof) ->
+    Box(modifier.background(graycolour) ){
+        LazyColumn(){
+            items(items){
 
-                ElevatedCard(
-                    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+                    (name, job, info1, info2,time1,to,time2,conditionof ) ->
+
+                ElevatedCard(elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
                     modifier = Modifier
                         .size(width = 380.dp, height = 150.dp)
-                        .padding(start = 32.dp, top = 16.dp)
+                        .padding(start = 20.dp, top = 16.dp)
                         .clickable { "to do" },
-                    colors = CardDefaults.cardColors(Color.White)
-                ) {
+                    colors = CardDefaults.cardColors(Color.White)) {
                     //image + name + job
                     Row(modifier = Modifier) {
                         Image(
@@ -159,7 +101,7 @@ fun Request() {
                         ) {
                             Box(modifier = Modifier
                                 .padding(end = 38.dp, top = 4.dp)
-                                .clickable { /*to do*/ }) {
+                                .clickable {  }) {
 
                                 Image(
                                     painter = painterResource(id = R.drawable.correcticon),
@@ -170,7 +112,7 @@ fun Request() {
                                 )
 
                             }
-                            Box(modifier = Modifier.clickable { /*to do*/ }) {
+                            Box(modifier = Modifier.clickable {  }) {
                                 Image(
                                     painter = painterResource(id = R.drawable.xicon),
                                     contentDescription = "des",
@@ -210,12 +152,12 @@ fun Request() {
                         }
                     }
                     // info
-                    Row(
-                        modifier = Modifier.padding(start = 25.dp, top = 5.dp)
+                    Row(modifier = Modifier.padding(start = 25.dp, top = 5.dp)
                     ) {
                         Card(
                             modifier = Modifier
                                 .size(width = 53.dp, height = 21.dp)
+                                .padding(bottom = 2.dp)
                                 .wrapContentWidth(),
                             shape = RoundedCornerShape(10.dp),
                             colors = CardDefaults.cardColors(Color(0xFFECEDF1))
@@ -234,11 +176,11 @@ fun Request() {
                             }
                         }
 
-                        if (info2.isNotBlank()) {
+                        if (info2.isNotBlank()){
                             Card(
                                 modifier = Modifier
                                     .size(width = 62.dp, height = 21.dp)
-                                    .padding(start = 10.dp)
+                                    .padding(start = 10.dp, bottom = 2.dp)
                                     .wrapContentWidth(),
                                 shape = RoundedCornerShape(10.dp),
                                 colors = CardDefaults.cardColors(Color(0xFFECEDF1))
@@ -263,12 +205,12 @@ fun Request() {
 
                 }
             }
-        }
+        }}
 
 
-    }
 
-    }
+
+}
 
 data class RequestItem(
     val name: String,
@@ -280,5 +222,4 @@ data class RequestItem(
     val time2: String,
     val conditionof: String,
 
-)
-
+    )

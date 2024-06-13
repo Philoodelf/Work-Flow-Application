@@ -1,6 +1,5 @@
 package com.example.work_flowapplication.ui.theme
 
-import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -26,19 +25,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.work_flowapplication.R
 
 @Composable
-fun editProfilePage(navController: NavController) {
-    val context = LocalContext.current.applicationContext
+fun editProfilePage(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -253,8 +249,3 @@ Column( ) {
 
  }
 
-@Preview(showBackground = true)
-@Composable
-fun editProfilePagePreview() {
-
-}

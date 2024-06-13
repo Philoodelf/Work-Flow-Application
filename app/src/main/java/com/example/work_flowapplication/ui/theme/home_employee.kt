@@ -89,9 +89,6 @@ data class bottomnavigationitem(
     val title:String,
     val selectedicon:Int,
 
-
-
-
 )
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class Alltaskrespond(
 
 	@field:SerializedName("result")
-	val result: List<ResultItem?>? = null,
+	val result: List<ResultSearch?>? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null
