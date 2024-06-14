@@ -1,5 +1,6 @@
 package com.example.work_flowapplication.ui.theme
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -26,19 +27,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.work_flowapplication.R
-
-
-
-
-
-
-
+import com.example.work_flowapplication.ui.api.Alltaskrespond
+import com.example.work_flowapplication.ui.api.ApiManger
+import com.example.work_flowapplication.ui.localdata.getToken
+import retrofit2.Call
+import retrofit2.Response
 
 
 @Composable
@@ -46,6 +46,29 @@ import com.example.work_flowapplication.R
 
 fun app(){
 
+
+
+    val context = LocalContext.current.applicationContext
+ApiManger.getapiservices().getalltask(getToken(context)).enqueue(object :retrofit2.Callback<Alltaskrespond>{
+    override fun onResponse(p0: Call<Alltaskrespond>, p1: Response<Alltaskrespond>) {
+        val rspond = p1.body()
+        if (p1.isSuccessful && rspond != null) {
+
+            Log.e("tag", "onResponse: message: ${rspond.message}")
+
+
+            Log.e("tag", "onResponse: message: ${rspond.result}")
+
+
+        } else {
+            handleApiError(p1)
+        }
+    }
+    override fun onFailure(p0: Call<Alltaskrespond>, p1: Throwable){
+        Log.e("tag", "onResponse: message:falair")
+
+    }
+})
 
     var imageid = arrayOf(
 
@@ -120,7 +143,8 @@ indexitem:Int,
         Card(
             modifier = Modifier
                 .width(340.dp)
-                .height(170.dp).padding(top=32.dp, start = 15.dp)
+                .height(170.dp)
+                .padding(top = 32.dp, start = 15.dp)
                 .clip(RoundedCornerShape(10.dp))
                 , colors = CardDefaults.cardColors(white),
             elevation = CardDefaults.cardElevation(15.dp)
@@ -231,7 +255,9 @@ indexitem:Int,
                     colors = ButtonDefaults.buttonColors(containerColor = bluecolour)
                 ) {
                     Text(text = "View", fontSize = 12.sp, fontWeight = FontWeight.Bold,
-                        modifier = Modifier.width(30.dp).height(15.dp)
+                        modifier = Modifier
+                            .width(30.dp)
+                            .height(15.dp)
                         )
 
                 }
@@ -245,7 +271,34 @@ indexitem:Int,
 
     }
 }
-
+fun handleApiError(response: Response<Alltaskrespond>) {
+    when (response.code()) {
+        401 -> {
+            // Handle Unauthorized - token may be invalid or expired
+            Log.e("tag", "onResponse: unauthorized, token might be expired or invalid")
+            // You can prompt the user to login again or refresh the token
+        }
+        429 -> {
+            // Handle Too Many Requests - rate limiting
+            Log.e("tag", "onResponse: too many requests, retry after some time")
+            // You can implement a retry mechanism with exponential backoff
+        }
+        400 -> {
+            // Handle Bad Request
+            val errorBody = response.errorBody()?.string()
+            Log.e("tag", "onResponse: bad request, error: $errorBody")
+        }
+        500 -> {
+            // Handle Internal Server Error
+            val errorBody = response.errorBody()?.string()
+            Log.e("tag", "onResponse: server error, error: $errorBody")
+        }
+        else -> {
+            // Handle other status codes
+            val errorBody = response.errorBody()?.string()
+            Log.e("tag", "onResponse: error, code: ${response.code()}, error: $errorBody")
+        }
+    }}
 
 @Composable
 @Preview

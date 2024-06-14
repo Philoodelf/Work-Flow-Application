@@ -57,11 +57,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.work_flowapplication.ui.location.location
+import com.example.work_flowapplication.ui.theme.AddEmployee
 import com.example.work_flowapplication.ui.theme.WorkFlowApplicationTheme
+import com.example.work_flowapplication.ui.theme.calender
+import com.example.work_flowapplication.ui.theme.editProfilePage
 import com.example.work_flowapplication.ui.theme.ll
 import com.example.work_flowapplication.ui.theme.navwitpadding
+import com.example.work_flowapplication.ui.theme.moadlbottomsheettask
 import kotlinx.coroutines.launch
 
 class HomeNav : AppCompatActivity() {
@@ -75,7 +83,8 @@ class HomeNav : AppCompatActivity() {
                     color = MaterialTheme.colorScheme.background
 
                 ) {
-
+                    Greeting("Android")
+                    buttonnav(this)
 
 
 
@@ -85,9 +94,18 @@ class HomeNav : AppCompatActivity() {
     }
 }
 
+@Composable
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+    Text(
+        text = "Hello $name!",
+        modifier = modifier
+    )
+}
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun buttonnav(navController: NavHostController= rememberNavController()) {
+fun buttonnav() {
    // val scope = rememberCoroutineScope()
  //  val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
@@ -126,8 +144,9 @@ fun buttonnav(navController: NavHostController= rememberNavController()) {
     ) {
 
     Scaffold(
+
         topBar = {
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val navBackStackEntry by navigationController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
             if (currentRoute == Screens.Home.route ||
                 currentRoute == Screens.Requests.route ||
@@ -201,26 +220,146 @@ fun buttonnav(navController: NavHostController= rememberNavController()) {
                 )}
         },
 
+//        bottomBar ={
+//        BottomAppBar(containerColor = Color(0xFF029DF0), modifier = Modifier
+//            .padding(horizontal = 5.dp)
+//            .clip(shape = RoundedCornerShape(16.dp)),
+//
+//        ){
+//        bottomBar = {
+//
+//            NavigationBar(containerColor = Color.White) {
+//                val iconcolour=Color(0xFF1E7DFF)
+//
+//
+//
+//                    }
+//            // Home
+//            IconButton(onClick = {
+//                selected.value=Icons.Default.Home
+//                navigationController.navigate(Screens.Home.route){
+//                    popUpTo(0)
+//                }
+//            },
+//                modifier = Modifier
+//                 //   .weight(1f)
+//                ) {
+//                Icon( Icons.Default.Home , contentDescription = null, modifier = Modifier.size(32.dp),
+//
+//                   tint = if(selected.value== Icons.Default.Home) Color.White else Color(0xFF016DA8))
+//                    Text(text = "Home", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
+//            }
+//                //Requests
+//            IconButton(onClick = {
+//                selected.value=Icons.Default.Star
+//                navigationController.navigate(Screens.Requests.route){
+//                    popUpTo(0)
+//                }
+//            },
+//           //     modifier = Modifier.weight(1f)
+//            ) {
+//               // Icon(imageVector = R.drawable., contentDescription =null )
+//                Image(
+//                    painter = painterResource(id = R.drawable.requests), contentDescription = null, modifier = Modifier.size(32.dp),
+//                   colorFilter = ColorFilter.tint( if(selected.value== Icons.Default.Star) Color.White else Color(0xFF016DA8)))
+//                Text(text = "Request", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
+//
+//            }
+//               //Dashboard
+//            IconButton(onClick = {
+//                selected.value=Icons.Default.DateRange
+//                navigationController.navigate(Screens.Dashboard.route){
+//                    popUpTo(0)
+//                }
+//            },
+//              //  modifier = Modifier.weight(1f)
+//            ) {
+//                Image(
+//                    painter = painterResource(id = R.drawable.dashboard), contentDescription = null, modifier = Modifier.size(32.dp),
+//                    colorFilter = ColorFilter.tint(if(selected.value== Icons.Default.DateRange) Color.White else Color(0xFF016DA8)))
+//                Text(text = "Dashboard", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
+//
+//
+//            }
+//            //Report
+//            IconButton(onClick = {
+//                selected.value=Icons.Default.Warning
+//                navigationController.navigate(Screens.Report.route){
+//                    popUpTo(0)
+//                }
+//            },
+//              //  modifier = Modifier.weight(1f)
+//            ) {
+//                Image(
+//                    painter = painterResource(id = R.drawable.report), contentDescription = null, modifier = Modifier.size(32.dp),
+//                    colorFilter = ColorFilter.tint(if(selected.value== Icons.Default.Warning) Color.White else Color(0xFF016DA8)))
+//                Text(text = "Report", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
+//
+//
+//            }
+//            // profile
+//            IconButton(onClick = {
+//                selected.value=Icons.Default.AccountCircle
+//                navigationController.navigate(Screens.Profile.route){
+//                    popUpTo(0)
+//                }
+//            },
+//              //  modifier = Modifier.weight(1f)
+//            ) {
+//
+//               // Icon( Icons.Default.AccountCircle ,
+//                Image(
+//                    painter = painterResource(id = R.drawable.profile), contentDescription = null, modifier = Modifier.size(32.dp),
+//                    colorFilter = ColorFilter.tint(if(selected.value== Icons.Default.AccountCircle) Color.White else Color(0xFF016DA8)))
+//                Text(text = "Profile", fontWeight = FontWeight.SemiBold, modifier=Modifier.padding(top = 23.dp))
+//
+//
+//            }
+//
+//
+//
+//
+//    } ) {
+
         bottomBar = {
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val navBackStackEntry by navigationController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
             if (currentRoute == Screens.Home.route ||
                 currentRoute == Screens.Requests.route ||
                 currentRoute==Screens.Report.route||
                 currentRoute==Screens.Profile.route||
                 currentRoute==Screens.Dashboard.route
+
                 ) {
-            bottombar(navController)}
+            bottombar(navigationController)}
 
         }
 
     )
 
     { paddingValues ->
+        NavHost(
+            navController = navigationController,
+            startDestination = Screens.Home.route,
+            modifier = Modifier.padding(paddingValues)
+        ) {
+            composable(route = Screens.Home.route){ Home()}
+            composable(route=Screens.Requests.route){ Request() }
+            composable(route=Screens.Dashboard.route){ Dashboard(navigationController)}
+            composable(route=Screens.Report.route){ com.example.work_flowapplication.Report() }
+            composable(route=Screens.Profile.route){ Profile() }
+            composable(route = Screens.SendAlert.route){ SendAlert(navigationController) }
+            composable(route = Screens.Search.route){ Search(navigationController) }
+            composable(route = Screens.Addemployee.route){ AddEmployee(navigationController) }
+            composable(route = Screens.Editeployee.route){ editProfilePage(navigationController) }
+            composable(route = Screens.Timetrack.route){ calender(navigationController) }
+            composable(route = Screens.CreateTask.route){ moadlbottomsheettask(navigationController) }
+            composable(route = Screens.location.route){ location(navigationController) }
 
-       navwitpadding(navController,modifier = Modifier.padding(paddingValues))
+        }
+      /* navwitpadding(navController,modifier = Modifier.padding(paddingValues))*/
 
-    }}}
+    }}
 @Composable
 fun bottombar (navController: NavController){
     var selected by remember {
@@ -406,41 +545,40 @@ fun drawer(drawerState: DrawerState) {
     }
 
 
-
-
-  //  val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-   // val scope = rememberCoroutineScope()
+    //  val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    // val scope = rememberCoroutineScope()
     ModalNavigationDrawer(
         drawerContent = {
-        ModalDrawerSheet {
-            Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                        .background(Color.White),
-                    contentAlignment = Alignment.Center
-                ){
+            ModalDrawerSheet {
+                Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp)
+                            .background(Color.White),
+                        contentAlignment = Alignment.Center
+                    ) {
 
-                }
+                    }
 
 
-            Column {
-                Text(text = "Settings", Modifier.padding(16.dp))
+                    Column {
+                        Text(text = "Settings", Modifier.padding(16.dp))
 
-                Row {
-                    Text(text = "Logout", Modifier.padding(16.dp))
-                }
-                Row {
-                    Text(text = "Change Password", Modifier.padding(16.dp))
+                        Row {
+                            Text(text = "Logout", Modifier.padding(16.dp))
+                        }
+                        Row {
+                            Text(text = "Change Password", Modifier.padding(16.dp))
+                        }
+                    }
                 }
             }
-        }
-        }
-    }, drawerState = drawerState) {
+        }, drawerState = drawerState
+    ) {
 
     }
-}
+}}
 
 
 

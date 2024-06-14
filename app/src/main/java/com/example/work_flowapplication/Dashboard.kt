@@ -2,7 +2,6 @@ package com.example.work_flowapplication
 
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,12 +21,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.work_flowapplication.ui.theme.SecondScreen
+
 import androidx.navigation.NavHostController
 import com.example.work_flowapplication.ui.theme.SecondScreen
 import com.example.work_flowapplication.ui.theme.graycolour
 
 @Composable
-fun Dashboard( modifier: Modifier = Modifier,navHostController: NavHostController) {
+fun Dashboard(navController: NavController) {
 
 
     Column (modifier.background(graycolour)){
@@ -69,7 +71,7 @@ fun Dashboard( modifier: Modifier = Modifier,navHostController: NavHostControlle
                             .size(width = 140.dp, height = 120.dp)
                             .padding(8.dp)
                             .clickable {
-                                navHostController.navigate(SecondScreen.Timetrack.route)
+                                navController.navigate(SecondScreen.Timetrack.route)
                             },
                         colors = CardDefaults.cardColors(Color.White)
                     ) {
@@ -92,8 +94,8 @@ fun Dashboard( modifier: Modifier = Modifier,navHostController: NavHostControlle
                             .size(width = 140.dp, height = 120.dp)
                             .padding(8.dp)
                             .clickable {
-                                // navController.navigate("SendAlert")
-                                navHostController.navigate(SecondScreen.SendAlert.route)
+                               // navController.navigate("SendAlert")
+                                navController.navigate(SecondScreen.SendAlert.route)
                             },
                         colors = CardDefaults.cardColors(Color.White)
                     ) {
@@ -103,7 +105,9 @@ fun Dashboard( modifier: Modifier = Modifier,navHostController: NavHostControlle
                             Image(
                                 painter = painterResource(id = R.drawable.sentalert), contentDescription =null,
                                 modifier = Modifier.size(65.dp),
-                            )
+
+
+                                )
                             Text("Send Alert", fontSize = 16.sp, color = Color.Black)
                         }
                     }
@@ -121,7 +125,7 @@ fun Dashboard( modifier: Modifier = Modifier,navHostController: NavHostControlle
                             .size(width = 140.dp, height = 120.dp)
                             .padding(8.dp)
                             .clickable {
-                                navHostController.navigate(SecondScreen.CreateTask.route)
+                                navController.navigate(SecondScreen.CreateTask.route)
                             },
                         colors = CardDefaults.cardColors(Color.White)
                     ) {
@@ -145,9 +149,7 @@ fun Dashboard( modifier: Modifier = Modifier,navHostController: NavHostControlle
                         modifier = Modifier
                             .size(width = 140.dp, height = 120.dp)
                             .padding(8.dp)
-                            .clickable {
-                                navHostController.navigate(SecondScreen.location.route)
-                            },
+                            .clickable { navController.navigate(SecondScreen.location.route)},
                         colors = CardDefaults.cardColors(Color.White)
                     ) {
 
@@ -177,7 +179,7 @@ fun Dashboard( modifier: Modifier = Modifier,navHostController: NavHostControlle
                             .size(width = 140.dp, height = 120.dp)
                             .padding(8.dp)
                             .clickable {
-                                navHostController.navigate(SecondScreen.Search.route)
+                                navController.navigate(SecondScreen.Search.route)
                             },
                         colors = CardDefaults.cardColors(Color.White)
                     ) {
@@ -201,7 +203,7 @@ fun Dashboard( modifier: Modifier = Modifier,navHostController: NavHostControlle
                             .size(width = 140.dp, height = 120.dp)
                             .padding(8.dp)
                             .clickable {
-                                navHostController.navigate(SecondScreen.Addemployee.route)
+                                navController.navigate(SecondScreen.Addemployee.route)
                             },
                         colors = CardDefaults.cardColors(Color.White)
                     ) {
@@ -225,3 +227,6 @@ fun Dashboard( modifier: Modifier = Modifier,navHostController: NavHostControlle
 
     }
 }
+
+
+

@@ -3,7 +3,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 
 class BiometricManage() {
-fun authenticateWithBiometrics(context: AppCompatActivity){
+fun authenticateWithBiometrics(context: AppCompatActivity, onSuccess: () -> Unit){
     val biometricPrompt = BiometricPrompt(
         context,
         object :BiometricPrompt.AuthenticationCallback(){
@@ -13,6 +13,7 @@ fun authenticateWithBiometrics(context: AppCompatActivity){
 
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
+                onSuccess()
             }
 
             override fun onAuthenticationFailed() {
@@ -26,7 +27,7 @@ fun authenticateWithBiometrics(context: AppCompatActivity){
     val promptInfo = BiometricPrompt.PromptInfo.Builder()
         .setTitle("Biometric Login")
         .setSubtitle("Sufyan Please Place your finger on the sensor")
-        .setNegativeButtonText("Use Password")
+        .setNegativeButtonText("use pin")
         .build()
 
     biometricPrompt.authenticate(promptInfo)

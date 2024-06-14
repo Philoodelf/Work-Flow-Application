@@ -1,7 +1,5 @@
 package com.example.work_flowapplication
 
-import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,7 +29,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -48,8 +45,8 @@ import retrofit2.Response
 
 @Composable
 fun SendAlert(
-    //navController: NavController
     navController: NavHostController
+
     ) {
     Box(Modifier.background(Color.White).fillMaxSize()) {
 
@@ -87,9 +84,9 @@ fun SendAlert(
                 send(navController = navController)
             }
 
-        }
     }
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -119,35 +116,45 @@ fun send(
 ) {
     val context = LocalContext.current.applicationContext
     val create = Createalert("messageeeeeee", "workeeeeeeee",)
-    ElevatedButton(onClick = {
-        ApiManger.getapiservices().createalert(getToken(context), create).enqueue(object : retrofit2.Callback<Alertrespond> {
-            override fun onResponse(call: Call<Alertrespond>, response: Response<Alertrespond>) {
-                val body = response.body()
-                if (response.isSuccessful && body != null) {
-                    Log.e("tag", "onResponse: message, token: ${body.message}")
-                    Log.e("tag", "onResponse: result, token: ${body.result}")
-                } else {
-                    Log.e("tag", "onResponse: unsuccessful response or null body")
-                    Log.e("tag", "Response code: ${response.code()}, message: ${response.message()}")
-                    if (response.errorBody() != null) {
-                        Log.e("tag", "Error body: ${response.errorBody()?.string()}")
+    ElevatedButton(
+        onClick = {
+            ApiManger.getapiservices().createalert(getToken(context), create)
+                .enqueue(object : retrofit2.Callback<Alertrespond> {
+                    override fun onResponse(
+                        call: Call<Alertrespond>,
+                        response: Response<Alertrespond>
+                    ) {
+                        val body = response.body()
+                        if (response.isSuccessful && body != null) {
+                            Log.e("tag", "onResponse: message, token: ${body.message}")
+                            Log.e("tag", "onResponse: result, token: ${body.result}")
+                        } else {
+                            Log.e("tag", "onResponse: unsuccessful response or null body")
+                            Log.e(
+                                "tag",
+                                "Response code: ${response.code()}, message: ${response.message()}"
+                            )
+                            if (response.errorBody() != null) {
+                                Log.e("tag", "Error body: ${response.errorBody()?.string()}")
+                            }
+                        }
                     }
-                }
-            }
 
-            override fun onFailure(call: Call<Alertrespond>, t: Throwable) {
-                Log.e("tag", "onFailure: fail send", t)
-            }
-        })
-        navController.popBackStack()
-    },colors = ButtonDefaults.buttonColors(
-         Color(0xFF029DF0)),
+                    override fun onFailure(call: Call<Alertrespond>, t: Throwable) {
+                        Log.e("tag", "onFailure: fail send", t)
+                    }
+                })
+            navController.popBackStack()
+        }, colors = ButtonDefaults.buttonColors(
+            Color(0xFF029DF0)
+        ),
         modifier = Modifier.size(width = 300.dp, height = 50.dp)
 
     ) {
-        Text(text = "Send", color = Color.White,
+        Text(
+            text = "Send", color = Color.White,
             fontWeight = FontWeight.Medium,
-           fontSize = 20.sp
-            )
+            fontSize = 20.sp
+        )
     }
-}
+}}

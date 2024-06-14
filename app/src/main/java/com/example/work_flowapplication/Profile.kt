@@ -34,12 +34,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.work_flowapplication.ui.theme.Screen_employee
-import com.example.work_flowapplication.ui.theme.graycolour
 
 @Composable
-fun Profile(modifier :Modifier) {
-    Box(modifier.background(graycolour)){
+fun Profile() {
+
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -255,4 +253,4 @@ fun Profile(modifier :Modifier) {
         }
 
 
-    }}
+    }

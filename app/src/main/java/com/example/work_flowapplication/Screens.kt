@@ -16,8 +16,20 @@ sealed class Screens(val route: String) {
   object SendAlert : Screens("Send Alert")
   object Search : Screens("Search")
 
-  object location: Screens("location")
+  object admin: Screens("admin")
 
+  object login: Screens("login")
+  object SendAlertDestination : Screens("SendAlertDestination")
+
+
+  object Addemployee: Screens("Addemployee")
+  object Editeployee: Screens("Editeployee")
+
+  object Timetrack: Screens("Timetrack")
+
+  object CreateTask: Screens("CreateTask")
+  object location: Screens("location")
+  object employee: Screens("employee")
 
 }
 

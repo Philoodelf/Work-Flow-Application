@@ -54,8 +54,6 @@ import java.util.Locale
 @Composable
 fun AddEmployee(navController: NavHostController) {
     val context = LocalContext.current.applicationContext
-
-
     Column(
         modifier = Modifier
             .fillMaxSize()

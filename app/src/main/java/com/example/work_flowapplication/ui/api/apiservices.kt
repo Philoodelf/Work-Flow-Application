@@ -17,6 +17,22 @@ fun userregister(@Body userrequest :LoginRequest ):Call<LoginResponse>
 @GET("api/v1/task")
 fun getalltask(@Header ("token")token :String? ):Call<Alltaskrespond>
 
+@POST("api/v1/workRecord/clockIn")
+fun clockin(@Header("token")token:String?):Call<ClockinResponse>
+
+@POST("api/v1/workRecord/clockOut")
+fun clockout(@Header("token")token:String?):Call<ClockoutResponse>
+
+/*
+@POST("api/v1/employee?name=michael")
+fun getemployeebyname(@Query("name")name:String?):Call<EmployeedataResponse>
+*/
+@POST("api/v1/request")
+fun createvacation(@Header("token")token:String?,@Body vacationreques:Vacationrequest):Call<Vacationrespond>
+
+
+@POST("/api/v1/task")
+fun creatretask(@Header("token")token:String?,@Body sendtaskrequest: Sendtaskrequest):Call<Sendtaskrespond>
 
 @POST("api/v1/alert")
 fun createalert(@Header("token")token :String?, @Body alert: Createalert):Call<Alertrespond>

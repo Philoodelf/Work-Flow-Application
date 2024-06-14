@@ -54,25 +54,29 @@ import retrofit2.Response
 @OptIn(ExperimentalMaterial3Api::class)
 
 @Composable
-fun loginsereen( navController: NavController){
+fun loginsereen( navController: NavController) {
     val context = LocalContext.current.applicationContext
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(color = Color.White),
-        horizontalAlignment =Alignment.CenterHorizontally ) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.White),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Icon(
             painter = painterResource(id = R.drawable.wave),
             contentDescription = "Localized description",
-tint = bluecolour
+            tint = bluecolour
 
         )
 
 
-        Text(modifier = Modifier.padding(top = 80.dp),text = "Login",
-            fontSize = 48.sp, fontWeight = FontWeight.Bold
-            ,fontStyle =FontStyle.Normal)
-        Text(modifier = Modifier.padding(top = 20.dp),
+        Text(
+            modifier = Modifier.padding(top = 80.dp), text = "Login",
+            fontSize = 48.sp, fontWeight = FontWeight.Bold, fontStyle = FontStyle.Normal
+        )
+        Text(
+            modifier = Modifier.padding(top = 20.dp),
             text = "Welcome back you’ve\n" + "     been missed!",
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp, color = Color.Gray
@@ -84,15 +88,14 @@ tint = bluecolour
             modifier = Modifier
                 .padding(top = 53.dp)
                 .fillMaxWidth(0.9f)
-                .height(65.dp)
-                ,
-           colors = OutlinedTextFieldDefaults.colors(
-unfocusedBorderColor= textfieldcolour,
-        focusedLabelColor= textfieldcolour,
-               focusedTextColor = black
-           ),
+                .height(65.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                unfocusedBorderColor = textfieldcolour,
+                focusedLabelColor = textfieldcolour,
+                focusedTextColor = black
+            ),
 
-            placeholder = {Text(text = "esmail@.com")},
+            placeholder = { Text(text = "esmail@.com") },
             value = text1, onValueChange = { text1 = it },
 
             label = { Text(text = "Email", fontSize = 20.sp) },
@@ -102,104 +105,132 @@ unfocusedBorderColor= textfieldcolour,
             )
 
         var text2 by remember {
-        mutableStateOf("")
-    }
-        var visibilityPassword by rememberSaveable { mutableStateOf(value = false)}
-            OutlinedTextField(value =text2 , onValueChange ={text2=it}
-            ,modifier = Modifier
-                    .padding(top = 31.dp)
-                    .fillMaxWidth(0.9f)
-                    .height(65.dp)
-                    ,
+            mutableStateOf("")
+        }
+        var visibilityPassword by rememberSaveable { mutableStateOf(value = false) }
+        OutlinedTextField(value = text2, onValueChange = { text2 = it }, modifier = Modifier
+            .padding(top = 31.dp)
+            .fillMaxWidth(0.9f)
+            .height(65.dp),
 
-                visualTransformation =  if(visibilityPassword) {PasswordVisualTransformation()}
-                else{
-                    VisualTransformation.None
-                    }
-                ,
+            visualTransformation = if (visibilityPassword) {
+                PasswordVisualTransformation()
+            } else {
+                VisualTransformation.None
+            },
 
-                colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedBorderColor= textfieldcolour,
-                    focusedLabelColor= textfieldcolour,
-                    focusedTextColor = black
-                ),
-            label = { Text(text = "password", fontSize =20.sp )},
-trailingIcon = {
-    IconButton(onClick = { visibilityPassword =!visibilityPassword}) {
+            colors = OutlinedTextFieldDefaults.colors(
+                unfocusedBorderColor = textfieldcolour,
+                focusedLabelColor = textfieldcolour,
+                focusedTextColor = black
+            ),
+            label = { Text(text = "password", fontSize = 20.sp) },
+            trailingIcon = {
+                IconButton(onClick = { visibilityPassword = !visibilityPassword }) {
 
-        Icon( painter = painterResource(R.drawable.passwordicon),
-        contentDescription = "", modifier = Modifier.size(29.dp) )
+                    Icon(
+                        painter = painterResource(R.drawable.passwordicon),
+                        contentDescription = "", modifier = Modifier.size(29.dp)
+                    )
 
-
-    }
-})
-Text(text = "Reset password", modifier = Modifier.padding(top = 44.dp),
-    fontSize = 20.sp, color = bluecolour)
-
-TextButton(onClick = {
-    val email = text1
-    val password = text2
-    val loginRequest = LoginRequest(email, password)
-    ApiManger.getapiservices().userregister(loginRequest).enqueue(object :retrofit2.Callback<LoginResponse>{
-        override fun onResponse(p0: Call<LoginResponse>, p1: Response<LoginResponse>) {
-            val body =p1.body()
-            if (p1.isSuccessful && body != null) {
-
-                when (body.message) {
-                    "success" -> {
-                        // Handle successful login
-                        Toast.makeText(context, "Login successful", Toast.LENGTH_LONG).show()
-                        Log.e("tag", "onResponse: Login successful, token: ${body.token}")
-                        saveToken(context,body.token)
-                        decodeAndSaveTokenData(context, body.token)
-                        if (getRole(context)=="admin")
-                        navController.navigate(Screens.Home.route){}
-                        else if (getRole(context)=="user"){  navController.navigate(Screen_employee.home.route)}
-                        Log.e("tag", "onResponse: Login  , token: ${body.token}")
-                        Log.e("tag", "onResponse: Login  , token: ${getRole(context)}")
-                        // Store the token for future use (e.g., using SharedPreferences)
-                        // Handle successful login logic (e.g., navigate to main screen)
-                    }
 
                 }
+            })
+        Text(
+            text = "Reset password", modifier = Modifier.padding(top = 44.dp),
+            fontSize = 20.sp, color = bluecolour
+        )
+
+        TextButton(
+            onClick = {
 
 
-            }
-            else {
-                Toast.makeText(context, "incorrect email or password", Toast.LENGTH_LONG).show()
 
-}
+              /*
 
-            }
+                }
+                    navController.navigate(Screen_employee.home.route)
+                }*/
 
 
-        override fun onFailure(p0: Call<LoginResponse>, p1: Throwable) {
-            // Handle network error or failure
-            Log.e("tag", "onFailure: Error occurred during login request", p1) // Or display user-friendly error message
+                val email = text1
+                val password = text2
+                val loginRequest = LoginRequest(email, password)
+                ApiManger.getapiservices().userregister(loginRequest)
+                    .enqueue(object : retrofit2.Callback<LoginResponse> {
+                        override fun onResponse(
+                            p0: Call<LoginResponse>,
+                            p1: Response<LoginResponse>
+                        ) {
+                            val body = p1.body()
+                            if (p1.isSuccessful && body != null) {
+
+                                when (body.message) {
+                                    "success" -> {
+                                        // Handle successful login
+                                        Toast.makeText(
+                                            context,
+                                            "Login successful",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                        Log.e(
+                                            "tag",
+                                            "onResponse: Login successful, token: ${body.token}"
+                                        )
+                                        saveToken(context, body.token)
+                                        decodeAndSaveTokenData(context, body.token)
+                                        if (getRole(context) == "admin") { navController.navigate(Screens.admin.route)}
+                                        else if (getRole(context) == "user") {navController.navigate(Screens.employee.route)}
+                                        /*  */
+                                        Log.e("tag", "onResponse: Login  , token: ${body.token}")
+                                        Log.e(
+                                            "tag",
+                                            "onResponse: Login  , token: ${getRole(context)}"
+                                        )
+                                        // Store the token for future use (e.g., using SharedPreferences)
+                                        // Handle successful login logic (e.g., navigate to main screen)
+                                    }
+
+                                }
+
+
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    "incorrect email or password",
+                                    Toast.LENGTH_LONG
+                                ).show()
+
+                            }
+
+                        }
+
+
+                        override fun onFailure(p0: Call<LoginResponse>, p1: Throwable) {
+                            // Handle network error or failure
+                            Log.e(
+                                "tag",
+                                "onFailure: Error occurred during login request",
+                                p1
+                            ) // Or display user-friendly error message
+                        }
+                    })
+
+
+            }, modifier = Modifier
+                .padding(top = 39.dp)
+                .fillMaxWidth(0.9f)
+                .height(65.dp)
+                .clip(RoundedCornerShape(1.dp)),
+            colors = ButtonDefaults.buttonColors(containerColor = bluecolour)
+        ) {
+            Text(text = "login", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = white)
+
         }
-    })
 
-
-
-
-
-
-
-}, modifier = Modifier
-    .padding(top = 39.dp)
-    .fillMaxWidth(0.9f)
-    .height(65.dp)
-    .clip(RoundedCornerShape(1.dp)),
-    colors = ButtonDefaults.buttonColors(containerColor = bluecolour)
-    ){
-    Text(text = "login", fontSize = 24.sp, fontWeight =FontWeight.Bold, color = white )
+    }
 
 }
-
-    }
-
-    }
-
 
 
 
