@@ -144,15 +144,6 @@ fun loginsereen( navController: NavController) {
         TextButton(
             onClick = {
 
-
-
-              /*
-
-                }
-                    navController.navigate(Screen_employee.home.route)
-                }*/
-
-
                 val email = text1
                 val password = text2
                 val loginRequest = LoginRequest(email, password)
@@ -164,7 +155,7 @@ fun loginsereen( navController: NavController) {
                         ) {
                             val body = p1.body()
                             if (p1.isSuccessful && body != null) {
-
+                                saveToken(context,email)
                                 when (body.message) {
                                     "success" -> {
                                         // Handle successful login

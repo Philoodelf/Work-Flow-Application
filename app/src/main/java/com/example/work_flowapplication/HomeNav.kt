@@ -1,6 +1,7 @@
 package com.example.work_flowapplication
 
 //import androidx.compose.foundation.layout.ColumnScopeInstance.weight
+import AddEmployee
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -48,7 +49,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -57,7 +57,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.work_flowapplication.ui.location.location
-import com.example.work_flowapplication.ui.theme.AddEmployee
 import com.example.work_flowapplication.ui.theme.WorkFlowApplicationTheme
 import com.example.work_flowapplication.ui.theme.calender
 import com.example.work_flowapplication.ui.theme.editProfilePage

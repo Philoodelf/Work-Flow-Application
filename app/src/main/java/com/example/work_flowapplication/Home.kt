@@ -28,13 +28,13 @@ import com.joelkanyi.horizontalcalendar.HorizontalCalendarView
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun Home( modifier :Modifier) {
+fun Home() {
     var title:String
     title = Screens.Home.route.toString()
     val context = LocalContext.current.applicationContext
 
             Column(
-                modifier
+                modifier=Modifier
                     .fillMaxWidth()
                     .background(Color.White)
                     ,

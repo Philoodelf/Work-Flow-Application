@@ -10,9 +10,13 @@ private const val PREF_NAME = "com.example.work_flowapplication.ui.theme"
 private const val TOKEN_KEY = "token"
 private const val NAME_KEY = "name"
 private const val ROLE_KEY = "role"
+private const val ID_KEY = "id"
 private const val CIRCLE_LATITUDE_KEY = "circle_latitude"
 private const val CIRCLE_LONGITUDE_KEY = "circle_longitude"
 private const val CIRCLE_RADIUS_KEY = "circle_radius"
+private const val EMAIL_KEY = "email"
+private const val SECOND_TOKEN_KEY = "second_token"
+
 
 fun saveToken(context: Context, token: String?) {
     val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
@@ -20,6 +24,57 @@ fun saveToken(context: Context, token: String?) {
     editor.putString(TOKEN_KEY, token)
     editor.apply()
 }
+fun saveEmployeeId(context: Context, id: String?) {
+    val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+    editor.putString(ID_KEY, id)
+    editor.apply()
+}
+
+fun getEmployeeId(context: Context): String? {
+    val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    return sharedPreferences.getString(ID_KEY, null)
+}
+fun saveSecondToken(context: Context, token: String?) {
+    val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+    editor.putString(SECOND_TOKEN_KEY, token)
+    editor.apply()
+}
+
+fun getSecondToken(context: Context): String? {
+    val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    return sharedPreferences.getString(SECOND_TOKEN_KEY, null)
+}
+
+fun deleteEmployeeId(context: Context) {
+    val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+    editor.remove(ID_KEY)
+    editor.apply()
+}
+
+fun updateEmployeeId(context: Context, newId: String?) {
+    saveEmployeeId(context, newId)
+}
+fun saveEmail(context: Context, email: String?) {
+    val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+    editor.putString(EMAIL_KEY, email)
+    editor.apply()
+}
+fun getEmail(context: Context): String? {
+    val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    return sharedPreferences.getString(EMAIL_KEY, null)
+}
+fun deleteEmail(context: Context) {
+    val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+    editor.remove(EMAIL_KEY)
+    editor.apply()
+}
+
+
 
 fun getToken(context: Context): String? {
     val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)

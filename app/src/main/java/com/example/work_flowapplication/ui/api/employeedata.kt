@@ -1,17 +1,20 @@
 package com.example.work_flowapplication.ui.api
-/*
+
 import com.google.gson.annotations.SerializedName
 
-data class EmployeedataResponse(
+data class Employeedata(
 
 	@field:SerializedName("result")
-	val result: List<ResultItem?>? = null,
+	val result: List<i?>? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null
 )
 
-data class ResultItem(
+data class i(
+
+	@field:SerializedName("image")
+	val image: p? = null,
 
 	@field:SerializedName("address")
 	val address: String? = null,
@@ -43,9 +46,6 @@ data class ResultItem(
 	@field:SerializedName("phone")
 	val phone: String? = null,
 
-	@field:SerializedName("crruntLocation")
-	val crruntLocation: String? = null,
-
 	@field:SerializedName("__v")
 	val v: Int? = null,
 
@@ -67,4 +67,12 @@ data class ResultItem(
 	@field:SerializedName("updatedAt")
 	val updatedAt: String? = null
 )
-*/
+
+data class p(
+
+	@field:SerializedName("secure_url")
+	val secureUrl: String? = null,
+
+	@field:SerializedName("public_id")
+	val publicId: String? = null
+)

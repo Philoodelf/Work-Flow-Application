@@ -7,8 +7,8 @@ data class Vacationrequest(
 	@field:SerializedName("reason")
 	val reason: String? = null,
 
-	@field:SerializedName("file")
-	val file: String? = null,
+	@field:SerializedName("image")
+	val imge: String? = null,
 
 	@field:SerializedName("endDate")
 	val endDate: String? = null,

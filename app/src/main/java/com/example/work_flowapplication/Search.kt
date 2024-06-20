@@ -1,6 +1,5 @@
 package com.example.work_flowapplication
 
-import android.graphics.drawable.Drawable
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -21,10 +20,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -44,15 +45,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import com.example.work_flowapplication.ui.api.ApiManger
 import com.example.work_flowapplication.ui.api.Searchname
 import retrofit2.Call
 import retrofit2.Response
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.TextFieldDefaults
 
 
 @Composable
@@ -86,7 +83,7 @@ fun Search(navController: NavHostController
                 contentAlignment = Alignment.Center
             ) {
              //   searchbar()
-                Searchview(state = textstate, placeholder ="Search here... ", modifier = modifier)
+                Searchview(state = textstate, placeholder ="Search here... ", modifier = Modifier)
             }
 
             employye(searchtext = searchtext)

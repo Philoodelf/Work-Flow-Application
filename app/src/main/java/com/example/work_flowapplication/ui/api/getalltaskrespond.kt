@@ -1,8 +1,7 @@
 package com.example.work_flowapplication.ui.api
 
-import com.google.gson.annotations.SerializedName
-
-data class AssignTo(
+/*
+data class assignTo(
 
 	@field:SerializedName("name")
 	val name: String? = null,
@@ -14,16 +13,7 @@ data class AssignTo(
 	val email: String? = null
 )
 
-data class Alltaskrespond(
-
-	@field:SerializedName("result")
-	val result: List<ResultItem?>? = null,
-
-	@field:SerializedName("message")
-	val message: String? = null
-)
-
-data class ResultItem(
+data class resultItem(
 
 	@field:SerializedName("owner")
 	val owner: String? = null,
@@ -58,3 +48,13 @@ data class ResultItem(
 	@field:SerializedName("updatedAt")
 	val updatedAt: String? = null
 )
+
+data class Getalltaskrespond(
+
+	@field:SerializedName("result")
+	val result: List<ResultItem?>? = null,
+
+	@field:SerializedName("message")
+	val message: String? = null
+)
+*/

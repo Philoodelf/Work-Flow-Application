@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.core.app.ActivityCompat
+import androidx.navigation.compose.rememberNavController
 import com.example.work_flowapplication.ui.theme.WorkFlowApplicationTheme
 
 class MainActivity : AppCompatActivity() {
@@ -24,16 +25,20 @@ class MainActivity : AppCompatActivity() {
         )
         setContent {
             WorkFlowApplicationTheme {
+                val navController = rememberNavController()
+
 
                 buttonnav()
+
                 /*
                 if (getToken(this)==null) {
                     NavHostSetup(this)
                 }
                 else{ if (getRole(this)=="admin"){
+
                  }
 
-                   else{ home(this)}}
+                   else{ home(this)   }}
 */
 
             }

@@ -22,7 +22,6 @@ companion object {
 
 return INSTANCE!!
 
-
     }
     fun getapiservices ():apiservices{
         return getinstance().create(apiservices::class.java)

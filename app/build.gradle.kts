@@ -91,8 +91,8 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
     implementation("androidx.compose.animation:animation:1.6.7")
-
-
+    implementation ("com.github.bumptech.glide:compose:1.0.0-beta01")
+    implementation ("com.google.accompanist:accompanist-swiperefresh:0.24.13-rc")
 
 
 }
