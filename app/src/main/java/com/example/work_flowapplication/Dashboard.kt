@@ -2,6 +2,7 @@ package com.example.work_flowapplication
 
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,14 +26,14 @@ import androidx.navigation.NavController
 import com.example.work_flowapplication.ui.theme.SecondScreen
 
 import androidx.navigation.NavHostController
-import com.example.work_flowapplication.ui.theme.SecondScreen
+
 import com.example.work_flowapplication.ui.theme.graycolour
 
 @Composable
 fun Dashboard(navController: NavController) {
 
 
-    Column (modifier.background(graycolour)){
+    Column (modifier=Modifier.background(graycolour)){
 
         Box(modifier = Modifier.padding(start = 9.dp, top = 9.dp)) {
             Piechart(

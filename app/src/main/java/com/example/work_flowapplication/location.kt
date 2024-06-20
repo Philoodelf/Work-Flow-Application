@@ -72,8 +72,6 @@ fun location(navController: NavHostController) {
             markerPosition = latLng
         }
 
-
-
     ) {
         markerPosition?.let { position ->
             Marker(

@@ -16,6 +16,9 @@ sealed class Screens(val route: String) {
   object SendAlert : Screens("Send Alert")
   object Search : Screens("Search")
 
+  object Notifications: Screens("Notifications")
+  object searchrepo: Screens("searchrepo")
+
   object admin: Screens("admin")
 
   object login: Screens("login")

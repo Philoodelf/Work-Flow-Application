@@ -10,10 +10,10 @@ data class Alertrespond(
 	val message: String? = null,
 
 	@field:SerializedName("result")
-	val result: Result? = null,
+	val result: rresult? = null,
 )
 
-data class Result(
+data class rresult(
 
 	@field:SerializedName("owner")
 	val owner: String? = null,

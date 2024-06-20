@@ -1,17 +1,14 @@
 package com.example.work_flowapplication
 
-import android.graphics.drawable.Drawable
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,14 +17,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -49,13 +43,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import com.example.work_flowapplication.ui.api.ApiManger
 import com.example.work_flowapplication.ui.api.Searchname
 import retrofit2.Call
 import retrofit2.Response
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TextFieldDefaults
 
@@ -90,7 +82,7 @@ fun Search(navController: NavHostController
                 contentAlignment = Alignment.Center
             ) {
              //   searchbar()
-                Searchview(state = textstate, placeholder ="Search here... ", modifier = modifier)
+                Searchview(state = textstate, placeholder ="Search here... ", modifier = Modifier)
             }
 
             employye(searchtext = searchtext)
@@ -178,14 +170,14 @@ fun Searchview(state: MutableState<TextFieldValue>, placeholder: String, modifie
 fun employye(searchtext:String) {
     val context = LocalContext.current.applicationContext
     val items= listOf(
-        employeeItem("Jane Hawkins", "front end developer", R.drawable.reportprofile!!),
-        employeeItem("Brooklen Semoons", "back end developer", R.drawable.proprofile!!),
-        employeeItem("Leslie Alexander", "mobile developer", R.drawable.requestprofile!!),
-        employeeItem("Philopater Odolf", "mobile developer", R.drawable.philo!!),
-        employeeItem("Michael Magdy", "full stak developer",R.drawable.michael!!),
-        employeeItem("Esmail Farid", "full stak developer", R.drawable.esmail!!),
-        employeeItem("cristaion ronaldo", "full stak developer", R.drawable.requestprofile!!),
-        employeeItem("cristaion ronaldo", "full stak developer",R.drawable.requestprofile!!),
+        theitems("Jane Hawkins", "front end developer", R.drawable.reportprofile!!),
+        theitems("Brooklen Semoons", "back end developer", R.drawable.proprofile!!),
+        theitems("Leslie Alexander", "mobile developer", R.drawable.requestprofile!!),
+        theitems("Philopater Odolf", "mobile developer", R.drawable.philo!!),
+        theitems("Michael Magdy", "full stak developer",R.drawable.michael!!),
+        theitems("Esmail Farid", "full stak developer", R.drawable.esmail!!),
+        theitems("cristaion ronaldo", "full stak developer", R.drawable.requestprofile!!),
+        theitems("cristaion ronaldo", "full stak developer",R.drawable.requestprofile!!),
     )
     val filteredItems = items.filter {
         it.name.contains(searchtext, ignoreCase = true) ||
